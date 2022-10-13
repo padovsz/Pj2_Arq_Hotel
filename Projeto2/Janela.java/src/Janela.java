@@ -1,16 +1,17 @@
+import bd.core.MeuResultSet;
 import bd.daos.DAOCandidatos;
 import bd.dbos.DBOCandidato;
+import bd.dbos.DBOCargo;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.imageio.*;
-import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
 import java.io.*;
+import java.sql.SQLException;
 import java.text.ParseException;
 import javax.swing.ScrollPaneConstants;
-import java.sql.*;
 
 public class Janela extends JFrame 
 {
@@ -29,7 +30,6 @@ public class Janela extends JFrame
     protected JLabel lbCandidato = new JLabel("Candidato:");
     protected JLabel lbNum = new JLabel("Num:");
     protected JLabel lbPartido = new JLabel("Partido:");
-    protected JLabel lbNascimento = new JLabel("Data de nascimento:");
     protected JLabel lbCargo = new JLabel("Cargo:");
     protected JLabel lbUF = new JLabel("UF:");
 
@@ -38,17 +38,7 @@ public class Janela extends JFrame
     protected JTextField txtPartido = new JTextField();
     protected JTextField txtCargo = new JTextField();
     protected JTextField txtUF = new JTextField();
-
-    MaskFormatter mascaraData;
-    {
-        try {
-            mascaraData = new MaskFormatter("##/##/####");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected JFormattedTextField txtNascimento = new JFormattedTextField(mascaraData);
+    
 
     protected String[] nomeCampos = {
         "Candidato",
@@ -75,6 +65,7 @@ public class Janela extends JFrame
                                          ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                                          ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
+    MeuResultSet candidatos;
     public Janela()
     {
         super("Consulta");
@@ -197,7 +188,6 @@ public class Janela extends JFrame
                                 .addComponent(lbCandidato)
                                 .addComponent(lbNum)
                                 .addComponent(lbPartido)
-                                .addComponent(lbNascimento)
                                 .addComponent(lbCargo)
                                 .addComponent(lbUF)
                                 .addComponent(btnAnterior))
@@ -205,7 +195,6 @@ public class Janela extends JFrame
                                 .addComponent(txtCandidato, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNum)
                                 .addComponent(txtPartido)
-                                .addComponent(txtNascimento, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtCargo)
                                 .addComponent(txtUF)
                                 .addComponent(btnProximo))
@@ -221,9 +210,6 @@ public class Janela extends JFrame
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbPartido)
                                 .addComponent(txtPartido))
-                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbNascimento)
-                                .addComponent(txtNascimento))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbCargo)
                                 .addComponent(txtCargo))
@@ -250,6 +236,18 @@ public class Janela extends JFrame
 
         this.addWindowListener(new FechamentoDeJanela());
 
+        try{
+            candidatos = DAOCandidatos.getCandidatos();
+            candidatos.first();
+        }
+        catch (Exception err)
+        {
+            System.out.println(err.getMessage());
+        }
+
+        situacaoAtual = SituacaoAtual.navegando;
+        atualizarTela();
+
         this.setSize(800, 300);
         this.setVisible(true);
     }
@@ -258,10 +256,82 @@ public class Janela extends JFrame
     {
         txtCandidato.setText("");
         txtCargo.setText("");
-        txtNascimento.setText("");
         txtNum.setText("");
         txtPartido.setText("");
         txtUF.setText("");
+    }
+
+    protected void atualizarTela()
+    {
+        switch(situacaoAtual)
+        {
+            case navegando:
+            {
+                    btnProximo.setEnabled(true);
+                    btnAnterior.setEnabled(true);
+                    try {
+                        if (candidatos.isFirst()) {
+                            btnAnterior.setEnabled(false);
+                        }
+                        if (candidatos.isLast()) {
+                            btnProximo.setEnabled(false);
+                        }
+
+                        txtCandidato.setText(candidatos.getString("Nome do Candidato"));
+                        txtNum.setText(Integer.toString(candidatos.getInt("número")));
+                        txtPartido.setText(candidatos.getString("partido"));
+                        txtCargo.setText(candidatos.getString("Cargo"));
+                        txtUF.setText(candidatos.getString("UF"));
+                    } catch (Exception err) {
+                    }
+                    btnAtualizar.setEnabled(true);
+                    btnConsultar.setEnabled(true);
+                    btnDeletar.setEnabled(true);
+                    btnCancelar.setEnabled(true);
+                    btnCriar.setEnabled(true);
+                    btnSalvar.setEnabled(true);
+                    txtCandidato.setEnabled(false);
+                    txtNum.setEnabled(false);
+                    txtCargo.setEnabled(false);
+                    txtPartido.setEnabled(false);
+                    txtUF.setEnabled(false);
+                    lbMensagem.setText("Mensagem: navegando");
+                break;
+            }
+            case criando:
+            {
+                limparTela();
+                btnCriar.setEnabled(false);
+                btnAtualizar.setEnabled(false);
+                btnConsultar.setEnabled(false);
+                btnDeletar.setEnabled(false);
+                btnAnterior.setEnabled(false);
+                btnProximo.setEnabled(false);
+                txtCandidato.setEnabled(true);
+                txtNum.setEnabled(true);
+                txtCargo.setEnabled(true);
+                txtPartido.setEnabled(true);
+                txtUF.setEnabled(true);
+                lbMensagem.setText("Mensagem: Insira os dados do novo candidato");
+                break;
+            }
+            case alterando:
+            {
+                btnCriar.setEnabled(false);
+                btnAtualizar.setEnabled(false);
+                btnConsultar.setEnabled(false);
+                btnDeletar.setEnabled(false);
+                btnAnterior.setEnabled(false);
+                btnProximo.setEnabled(false);
+                txtNum.setEnabled(false);
+                txtCandidato.setEnabled(true);
+                txtCargo.setEnabled(true);
+                txtPartido.setEnabled(true);
+                txtUF.setEnabled(true);
+                lbMensagem.setText("Mensagem: Insira os novos dados do candidato");
+                break;
+            }
+        }
     }
 
     protected enum SituacaoAtual
@@ -270,17 +340,14 @@ public class Janela extends JFrame
     }
 
     SituacaoAtual situacaoAtual;
-
+    
     protected class CriarRegistro implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
             situacaoAtual = SituacaoAtual.criando;
-            limparTela();
-            btnAtualizar.setEnabled(false);
-            btnConsultar.setEnabled(false);
-            btnDeletar.setEnabled(false);
+            atualizarTela();
         }
     }
 
@@ -288,7 +355,8 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //codigo pra quando clicar no botão atualizar
+            situacaoAtual = SituacaoAtual.alterando;
+            atualizarTela();
         }
     }
 
@@ -305,7 +373,23 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //codigo botão deletar
+            if(JOptionPane.showConfirmDialog(null, 
+                    "Deseja excluir o registro atual permanentemente?",
+                    "Exclusão de registro",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            {
+                try {
+                    candidatos.deleteRow();
+                    DAOCandidatos.excluir(Integer.valueOf(txtNum.getText()));
+                }
+                catch (Exception err)
+                {
+                    JOptionPane.showMessageDialog(null,
+                            err.getMessage(),
+                            "Registro inválido!",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 
@@ -314,19 +398,44 @@ public class Janela extends JFrame
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if(situacaoAtual == SituacaoAtual.criando)
-            {
-                if(txtCandidato.getText() == "" || txtCargo.getText() == "" || txtPartido.getText() == "" || txtNum.getText() == "" || txtUF.getText() == "")
-                    lbMensagem.setText("Preencha os dados de candidato!");
-                else
-                {
-                    Date date = Date.valueOf(txtNascimento.getText());
-                    DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()), date);
-                    try {
-                        DAOCandidatos.incluir(novoCandidato);
+            switch (situacaoAtual) {
+                case criando: {
+                    if (txtCandidato.getText() == "" || txtCargo.getText() == "" || txtPartido.getText() == "" || txtNum.getText() == "" || txtUF.getText() == "")
+                        lbMensagem.setText("Mensagem: Preencha os dados de candidato!");
+                    else {
+                        DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                        try {
+                            DAOCandidatos.incluir(novoCandidato);
+                            candidatos = DAOCandidatos.getCandidatos();
+                        } catch (Exception err) {
+                            JOptionPane.showMessageDialog(null,
+                                    err.getMessage(),
+                                    "Erro de inclusão",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                        situacaoAtual = SituacaoAtual.navegando;
+                        atualizarTela();
                     }
-                    catch (Exception err) {
-                        System.err.println(err.getMessage());
+                    break;
+                }
+                case alterando: {
+                    if (txtCandidato.getText() == "" || txtCargo.getText() == "" || txtPartido.getText() == "" || txtNum.getText() == "" || txtUF.getText() == "")
+                        lbMensagem.setText("Mensagem: Novo candidato inválido");
+                    else
+                    {
+                        DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                        try {
+                            DAOCandidatos.atualizar(novoCandidato);
+                        } 
+                        catch (Exception err)
+                        {
+                            JOptionPane.showMessageDialog(null,
+                                    err.getMessage(),
+                                    "Erro de atualização",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                        situacaoAtual = SituacaoAtual.navegando;
+                        atualizarTela();
                     }
                 }
             }
@@ -338,16 +447,8 @@ public class Janela extends JFrame
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            btnAtualizar.setEnabled(true);
-            btnConsultar.setEnabled(true);
-            btnDeletar.setEnabled(true);
-            btnAnterior.setEnabled(true);
-            btnCancelar.setEnabled(true);
-            btnCriar.setEnabled(true);
-            btnProximo.setEnabled(true);
-            btnSalvar.setEnabled(true);
-
-            // voltar p navegação
+            situacaoAtual = SituacaoAtual.navegando;
+            atualizarTela();
         }
     }
 
@@ -355,7 +456,12 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            try {
+                candidatos.next();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            atualizarTela();
         }
     }
 
@@ -363,7 +469,12 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            try {
+                candidatos.previous();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            atualizarTela();
         }
     }
 

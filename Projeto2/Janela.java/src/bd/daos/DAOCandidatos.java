@@ -43,9 +43,9 @@ public class DAOCandidatos
             String sql;
 
             sql = "INSERT INTO ELEICOES.CANDIDATO " +
-                    "(nome_candidato,idNumero,partido,numCargo,data_nascimento ) " +
+                    "(nome_candidato,idNumero,partido,numCargo) " +
                     "VALUES " +
-                    "(?,?,?,?,?)";
+                    "(?,?,?,?)";
 
             BDSQLServer.COMANDO.prepareStatement(sql);
 
@@ -53,7 +53,6 @@ public class DAOCandidatos
             BDSQLServer.COMANDO.setInt(2, candidato.getNumCandidato());
             BDSQLServer.COMANDO.setString(3, candidato.getPartido());
             BDSQLServer.COMANDO.setInt(4, candidato.getNumCargo());
-            BDSQLServer.COMANDO.setDate(5, candidato.getDataNascimento());
 
             BDSQLServer.COMANDO.executeUpdate();
             BDSQLServer.COMANDO.commit();
@@ -106,16 +105,14 @@ public class DAOCandidatos
                     "SET nome_candidato =? " +
                     "SET partido =? " +
                     "SET numCargo  =? " +
-                    "SET data_nascimento  =? " +
                     "WHERE idNumero  = ?";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
 
             BDSQLServer.COMANDO.setString (1, cand.getNomeCandidato ().trim());
-            BDSQLServer.COMANDO.setInt    (5, cand.getNumCandidato ());
+            BDSQLServer.COMANDO.setInt    (4, cand.getNumCandidato ());
             BDSQLServer.COMANDO.setString (2, cand.getPartido ().trim());
             BDSQLServer.COMANDO.setInt    (3, cand.getNumCargo ());
-            BDSQLServer.COMANDO.setDate   (4, cand.getDataNascimento ());
 
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
@@ -148,11 +145,10 @@ public class DAOCandidatos
             if (!resultado.first())
                 throw new Exception ("Nao cadastrado");
 
-            candidato = new DBOCandidato (resultado.getString("nome_candidato "),
+            candidato = new DBOCandidato (resultado.getString("nome_candidato"),
                     resultado.getInt ("idNumero"),
-                    resultado.getString ("partido "),
-                    resultado.getInt("numCargo "),
-                    resultado.getDate("data_nascimento "));
+                    resultado.getString ("partido"),
+                    resultado.getInt("numCargo"));
         }
         catch (SQLException erro)
         {
@@ -185,6 +181,30 @@ public class DAOCandidatos
         catch (SQLException erro)
         {
             throw new Exception ("Erro ao recuperar candidato");
+        }
+
+        return resultado;
+    }
+
+    public static MeuResultSet getCandidatos () throws Exception
+    {
+        MeuResultSet resultado = null;
+
+        try
+        {
+            String sql;
+
+            sql = "SELECT nome_candidato as 'Nome do Candidato', partido, idNumero as 'número', nome_cargo as 'Cargo', UF " +
+                    "FROM ELEICOES.CANDIDATO JOIN ELEICOES.CARGO " +
+                    "ON IDCARGO = NUMCARGO";
+
+            BDSQLServer.COMANDO.prepareStatement (sql);
+
+            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao recuperar candidatos");
         }
 
         return resultado;

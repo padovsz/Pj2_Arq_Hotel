@@ -6,7 +6,6 @@ public class DBOCandidato implements Cloneable{
     private int numCandidato;
     private String partido;
     private int numCargo;
-    private Date dataNascimento;
 
     public String getNomeCandidato(){
         return nomeCandidato;
@@ -24,9 +23,6 @@ public class DBOCandidato implements Cloneable{
         return numCargo;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
 
     public void setNomeCandidato(String nomeCandidato) throws Exception
     {
@@ -64,16 +60,8 @@ public class DBOCandidato implements Cloneable{
         this.numCargo = numCargo;
     }
 
-    public void setDataNascimento(Date dataNascimento) throws Exception
-    {
-        if(dataNascimento.equals("") || dataNascimento == null)
-        {
-            throw new Exception ("Data de nascimento invalida");
-        }
-        this.dataNascimento = dataNascimento;
-    }
 
-    public DBOCandidato(String nome, int nCandidato, String partido, int nCargo, Date dNascimento)
+    public DBOCandidato(String nome, int nCandidato, String partido, int nCargo)
     {
         try
         {
@@ -81,7 +69,6 @@ public class DBOCandidato implements Cloneable{
             this.setNumCandidato(nCandidato);
             this.setPartido(partido);
             this.setNumCargo(nCargo);
-            this.setDataNascimento(dNascimento);
         }
         catch (Exception erro)
         {
@@ -98,7 +85,6 @@ public class DBOCandidato implements Cloneable{
         ret+="Número candidato: "+this.numCandidato  +"\n";
         ret+="Partido: "+this.partido +"\n";
         ret+="Número cargo: "+this.numCargo +"\n";
-        ret+="Nascimento: "+this.dataNascimento;
 
         return ret;
     }
@@ -128,8 +114,6 @@ public class DBOCandidato implements Cloneable{
         if (this.partido.equals(cand.partido))
             return false;
 
-        if (this.dataNascimento.equals(cand.dataNascimento))
-            return false;
 
         return true;
     }
@@ -141,7 +125,6 @@ public class DBOCandidato implements Cloneable{
         ret = 7*ret + Integer.valueOf(this.numCandidato).hashCode();
         ret = 7*ret + Integer.valueOf(this.numCargo).hashCode();
         ret = 7*ret + this.nomeCandidato.hashCode();
-        ret = 7*ret + this.dataNascimento.hashCode();
         ret = 7*ret + this.partido.hashCode();
 
         return ret;
@@ -153,7 +136,6 @@ public class DBOCandidato implements Cloneable{
         this.numCandidato   = modelo.numCandidato;
         this.partido        = modelo.partido;
         this.numCargo       = modelo.numCargo;
-        this.dataNascimento = modelo.dataNascimento;
     }
 
     public Object clone ()
