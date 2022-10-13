@@ -74,7 +74,7 @@ public class DAOCandidatos
                 String sql;
 
                 sql = "DELETE FROM ELEICOES.CANDIDATO " +
-                        "WHERE NUMCANDIDATO=?";
+                        "WHERE IDNUMERO=?";
 
                 BDSQLServer.COMANDO.prepareStatement (sql);
 
@@ -102,9 +102,9 @@ public class DAOCandidatos
             String sql;
 
             sql = "UPDATE ELEICOES.CANDIDATO " +
-                    "SET nome_candidato =? " +
-                    "SET partido =? " +
-                    "SET numCargo  =? " +
+                    "SET nome_candidato =?, " +
+                    "partido =?, " +
+                    "numCargo  =? " +
                     "WHERE idNumero  = ?";
 
             BDSQLServer.COMANDO.prepareStatement (sql);

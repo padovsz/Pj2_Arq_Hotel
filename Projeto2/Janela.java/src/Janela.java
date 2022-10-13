@@ -379,8 +379,9 @@ public class Janela extends JFrame
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
                 try {
-                    candidatos.deleteRow();
                     DAOCandidatos.excluir(Integer.valueOf(txtNum.getText()));
+                    candidatos = DAOCandidatos.getCandidatos();
+                    candidatos.first();
                 }
                 catch (Exception err)
                 {
@@ -426,6 +427,7 @@ public class Janela extends JFrame
                         DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
                         try {
                             DAOCandidatos.atualizar(novoCandidato);
+                            candidatos = DAOCandidatos.getCandidatos();
                         } 
                         catch (Exception err)
                         {
