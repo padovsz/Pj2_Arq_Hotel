@@ -186,27 +186,33 @@ public class DAOCandidatos
         return resultado;
     }
 
-    public static MeuResultSet getCandidatos () throws Exception
+    public static Object[][] getCandidatos () throws Exception
     {
-        MeuResultSet resultado = null;
+        Object[][] candidatos = new Object[][];
 
         try
         {
             String sql;
 
-            sql = "SELECT nome_candidato as 'Nome do Candidato', partido, idNumero as 'número', nome_cargo as 'Cargo', UF " +
-                    "FROM ELEICOES.CANDIDATO JOIN ELEICOES.CARGO " +
-                    "ON IDCARGO = NUMCARGO";
+            sql = "SELECT * FROM ELEICOES.CANDIDATO";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
 
-            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+            MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+
+            // pegar todos os candidatos
+            // passar por cada candidato
+            // pegar o numero do cargo dele
+            // passar esse número para um comando sql
+            // passar esse comando esse no banco de dados
+            // e o banco de dados retorna pra gente o nome do cargo de acordo com esse num
+            // adicionar ás informações desse candidato o nome do cargo dele, e adicionar esse nosso candidato ao nosso objeto de retorno
         }
         catch (SQLException erro)
         {
             throw new Exception ("Erro ao recuperar candidatos");
         }
 
-        return resultado;
+        return candidatos;
     }
 }

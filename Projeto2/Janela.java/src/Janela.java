@@ -56,6 +56,9 @@ public class Janela extends JFrame
             {"Damaris", String.valueOf(200), "PL", "01/01/2000", "Senador(a)", "DF"}
     };
 
+    // DAOCandidatos daoCandidatos = new DAOCandidatos();
+    // Object[][] data =  daoCandidatos.getCandidatos();
+
     protected JTable tabela = new JTable(data, nomeCampos);
     {
         tabela.setEnabled(false);
@@ -382,6 +385,8 @@ public class Janela extends JFrame
                     DAOCandidatos.excluir(Integer.valueOf(txtNum.getText()));
                     candidatos = DAOCandidatos.getCandidatos();
                     candidatos.first();
+                    situacaoAtual = SituacaoAtual.navegando;
+                    atualizarTela();
                 }
                 catch (Exception err)
                 {
