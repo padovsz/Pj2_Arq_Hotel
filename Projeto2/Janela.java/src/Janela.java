@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import javax.swing.ScrollPaneConstants;
 
-public class Janela extends JFrame 
+public class Janela extends JFrame
 {
     protected static final long serialVersionUID = 1L;
 
@@ -38,8 +38,8 @@ public class Janela extends JFrame
     protected JTextField txtPartido = new JTextField();
     protected JTextField txtCargo = new JTextField();
     protected JTextField txtUF = new JTextField();
-    
 
+/*
     protected String[] nomeCampos = {
         "Candidato",
         "Codigo",
@@ -59,6 +59,14 @@ public class Janela extends JFrame
     // DAOCandidatos daoCandidatos = new DAOCandidatos();
     // Object[][] data =  daoCandidatos.getCandidatos();
 
+    {
+        try {
+            Object[][] data = DAOCandidatos.getTabelaCandidatos();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected JTable tabela = new JTable(data, nomeCampos);
     {
         tabela.setEnabled(false);
@@ -67,7 +75,7 @@ public class Janela extends JFrame
     JScrollPane scroll = new JScrollPane(tabela,
                                          ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                                          ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
+*/
     MeuResultSet candidatos;
     public Janela()
     {
@@ -223,18 +231,18 @@ public class Janela extends JFrame
                                 .addComponent(btnAnterior)
                                 .addComponent(btnProximo))
         );
-
+/*
         JPanel pnlResultado = new JPanel();
         FlowLayout flwResultado = new FlowLayout();
         pnlResultado.setLayout(flwResultado);
 
-        pnlResultado.add(scroll);
+        pnlResultado.add(scroll);*/
 
         Container cntForm = this.getContentPane();
         cntForm.setLayout(new BorderLayout());
         cntForm.add(pnlBotoes,  BorderLayout.NORTH);
         cntForm.add(pnlComponentes, BorderLayout.WEST);
-        cntForm.add(pnlResultado, BorderLayout.EAST);
+        //cntForm.add(pnlResultado, BorderLayout.EAST);
         cntForm.add(pnlMensagem,  BorderLayout.SOUTH);
 
         this.addWindowListener(new FechamentoDeJanela());
@@ -285,8 +293,8 @@ public class Janela extends JFrame
                         txtPartido.setText(candidatos.getString("partido"));
                         txtCargo.setText(candidatos.getString("Cargo"));
                         txtUF.setText(candidatos.getString("UF"));
-                    } catch (Exception err) {
-                    }
+                    } catch (Exception err)
+                    {}
                     btnAtualizar.setEnabled(true);
                     btnConsultar.setEnabled(true);
                     btnDeletar.setEnabled(true);
@@ -367,7 +375,8 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //codigo pra quando clicar no botão Consultar
+            situacaoAtual = SituacaoAtual.consultando;
+            atualizarTela();
         }
 
     }
@@ -413,6 +422,7 @@ public class Janela extends JFrame
                         try {
                             DAOCandidatos.incluir(novoCandidato);
                             candidatos = DAOCandidatos.getCandidatos();
+                            candidatos.first();
                         } catch (Exception err) {
                             JOptionPane.showMessageDialog(null,
                                     err.getMessage(),
@@ -443,6 +453,26 @@ public class Janela extends JFrame
                         }
                         situacaoAtual = SituacaoAtual.navegando;
                         atualizarTela();
+                    }
+                }
+                case consultando: {
+                    if (txtNum.getText() == "")
+                        lbMensagem.setText("Mensagem: Digite o número do candidato que deseja consultar!");
+                    else
+                    {
+                        try {
+                            DBOCandidato candidato = DAOCandidatos.getCandidato(Integer.valueOf(txtNum.getText()));
+                            txtCandidato.setText(candidato.getNomeCandidato());
+                            txtNum.setText(Integer.toString(candidato.getNumCandidato()));
+                            txtPartido.setText(candidato.getPartido());
+                        }
+                        catch (Exception err)
+                        {
+                            JOptionPane.showMessageDialog(null,
+                                    err.getMessage(),
+                                    "Erro na consulta",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
             }

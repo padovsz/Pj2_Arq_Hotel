@@ -92,7 +92,7 @@ public class DAOCandidatos
     public static void atualizar (DBOCandidato cand) throws Exception
     {
         if (cand==null)
-            throw new Exception ("Livro nao fornecido");
+            throw new Exception ("Candidato nao fornecido");
 
         if (!cadastrado (cand.getNumCandidato()))
             throw new Exception ("Nao cadastrado");
@@ -152,7 +152,7 @@ public class DAOCandidatos
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar livro");
+            throw new Exception ("Erro ao procurar candidato");
         }
 
         return candidato;
@@ -186,9 +186,33 @@ public class DAOCandidatos
         return resultado;
     }
 
-    public static Object[][] getCandidatos () throws Exception
+    public static MeuResultSet getCandidatos () throws Exception
     {
-        Object[][] candidatos = new Object[][];
+        MeuResultSet resultado = null;
+
+        try
+        {
+            String sql;
+
+            sql = "SELECT E.nome_candidato as 'Nome do Candidato', e.partido, e.idNumero as 'número', c.nome_cargo as 'Cargo', c.UF " +
+                    "FROM ELEICOES.CANDIDATO E JOIN ELEICOES.CARGO C " +
+                    "ON C.IDCARGO = E.NUMCARGO" ;
+
+            BDSQLServer.COMANDO.prepareStatement (sql);
+
+            resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+        }
+        catch (SQLException erro)
+        {
+            throw new Exception ("Erro ao recuperar candidato");
+        }
+
+        return resultado;
+    }
+/*
+    public static Object[][] getTabelaCandidatos () throws Exception
+    {
+        Object[][] candidatos = new Object[30][5];
 
         try
         {
@@ -200,13 +224,30 @@ public class DAOCandidatos
 
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
-            // pegar todos os candidatos
-            // passar por cada candidato
-            // pegar o numero do cargo dele
-            // passar esse número para um comando sql
-            // passar esse comando esse no banco de dados
-            // e o banco de dados retorna pra gente o nome do cargo de acordo com esse num
-            // adicionar ás informações desse candidato o nome do cargo dele, e adicionar esse nosso candidato ao nosso objeto de retorno
+            resultado.first();
+            int candidatoAtual = 0;
+            while(!resultado.isAfterLast()){
+                int registroAtual  = 0;
+                int numCargo  = resultado.getInt("numCargo");
+
+                String sql2 = "SELECT nome_cargo, UF " +
+                        "FROM Eleicoes.Cargo " +
+                        "WHERE idCargo = ?";
+
+                BDSQLServer.COMANDO.prepareStatement (sql2);
+                BDSQLServer.COMANDO.setInt (1, numCargo);
+
+                MeuResultSet resultadoFinal = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
+
+
+                candidatos[candidatoAtual][registroAtual++] = resultado.getString("nome_candidato");
+                candidatos[candidatoAtual][registroAtual++] = resultado.getString("partido");
+                candidatos[candidatoAtual][registroAtual++] = resultado.getString("idNumero");
+                candidatos[candidatoAtual][registroAtual++] = resultadoFinal.getString("nome_cargo");
+                candidatos[candidatoAtual][registroAtual]   = resultadoFinal.getString("UF");
+
+                resultado.next();   //para ir ao proximo
+            }
         }
         catch (SQLException erro)
         {
@@ -214,5 +255,5 @@ public class DAOCandidatos
         }
 
         return candidatos;
-    }
+    }*/
 }
