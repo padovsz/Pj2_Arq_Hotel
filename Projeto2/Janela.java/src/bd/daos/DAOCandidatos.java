@@ -209,7 +209,7 @@ public class DAOCandidatos
 
         return resultado;
     }
-/*
+
     public static Object[][] getTabelaCandidatos () throws Exception
     {
         Object[][] candidatos = new Object[30][5];
@@ -255,5 +255,5 @@ public class DAOCandidatos
         }
 
         return candidatos;
-    }*/
+    }
 }

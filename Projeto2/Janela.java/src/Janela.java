@@ -1,5 +1,6 @@
 import bd.core.MeuResultSet;
 import bd.daos.DAOCandidatos;
+import bd.daos.DAOCargos;
 import bd.dbos.DBOCandidato;
 import bd.dbos.DBOCargo;
 
@@ -241,7 +242,7 @@ public class Janela extends JFrame
         Container cntForm = this.getContentPane();
         cntForm.setLayout(new BorderLayout());
         cntForm.add(pnlBotoes,  BorderLayout.NORTH);
-        cntForm.add(pnlComponentes, BorderLayout.WEST);
+        cntForm.add(pnlComponentes, BorderLayout.CENTER);
         //cntForm.add(pnlResultado, BorderLayout.EAST);
         cntForm.add(pnlMensagem,  BorderLayout.SOUTH);
 
@@ -259,7 +260,7 @@ public class Janela extends JFrame
         situacaoAtual = SituacaoAtual.navegando;
         atualizarTela();
 
-        this.setSize(800, 300);
+        this.setSize(700, 300);
         this.setVisible(true);
     }
 
@@ -342,12 +343,34 @@ public class Janela extends JFrame
                 lbMensagem.setText("Mensagem: Insira os novos dados do candidato");
                 break;
             }
+            case consultando:
+            {
+                btnCriar.setEnabled(false);
+                btnAtualizar.setEnabled(false);
+                btnConsultar.setEnabled(false);
+                btnDeletar.setEnabled(false);
+                btnAnterior.setEnabled(false);
+                btnProximo.setEnabled(false);
+                txtNum.setEnabled(true);
+                txtCandidato.setEnabled(false);
+                txtCargo.setEnabled(false);
+                txtPartido.setEnabled(false);
+                txtUF.setEnabled(false);
+                lbMensagem.setText("Mensagem: Insira o número do candidato que deseja consultar");
+                break;
+            }
+            case exibindo:
+            {
+                txtNum.setEnabled(false);
+                btnConsultar.setEnabled(true);
+                lbMensagem.setText("Pressione [Cancelar] para sair");
+            }
         }
     }
 
     protected enum SituacaoAtual
     {
-        navegando, consultando, alterando, criando, excluindo
+        navegando, consultando, alterando, criando, exibindo
     }
 
     SituacaoAtual situacaoAtual;
@@ -462,9 +485,16 @@ public class Janela extends JFrame
                     {
                         try {
                             DBOCandidato candidato = DAOCandidatos.getCandidato(Integer.valueOf(txtNum.getText()));
+
                             txtCandidato.setText(candidato.getNomeCandidato());
                             txtNum.setText(Integer.toString(candidato.getNumCandidato()));
                             txtPartido.setText(candidato.getPartido());
+                            DBOCargo cargo = DAOCargos.getCargo(candidato.getNumCargo());
+                            txtCargo.setText(cargo.getNomeCargo());
+                            txtUF.setText(cargo.getUF());
+
+                            situacaoAtual = SituacaoAtual.exibindo;
+                            atualizarTela();
                         }
                         catch (Exception err)
                         {
