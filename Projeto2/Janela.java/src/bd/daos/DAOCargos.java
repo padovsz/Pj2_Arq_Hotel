@@ -121,6 +121,35 @@ public class DAOCargos {
         }
     }
 
+    /*public static int getIdCargo(String nomeCargo, String UF) throws Exception
+    {
+        int retorno;
+
+        try {
+            String sql;
+
+            sql = "SELECT idCargo " +
+                    "FROM ELEICOES.CARGO " +
+                    "WHERE Nome_cargo = ? and " +
+                    "UF = ?";
+
+            BDSQLServer.COMANDO.prepareStatement(sql);
+
+            BDSQLServer.COMANDO.setString(1, nomeCargo);
+            BDSQLServer.COMANDO.setString(2, UF);
+
+            MeuResultSet resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
+
+            retorno = resultado.getInt("idCargo");
+        }
+        catch (SQLException err)
+        {
+            throw new Exception("Erro ao procurar IdCargo");
+        }
+
+        return retorno;
+    }
+*/
     public static DBOCargo getCargo(int idCargo) throws Exception
     {
         DBOCargo retorno = null;

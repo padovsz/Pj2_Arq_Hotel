@@ -39,7 +39,15 @@ public class Janela extends JFrame
     protected JTextField txtPartido = new JTextField();
     protected JTextField txtCargo = new JTextField();
     protected JTextField txtUF = new JTextField();
+/*
+    String[] cargos = {"1 - Presidente", "2 - Governador", "3 - Senador", "4 - Deputado Federal", "5 - Deputado Estadual"};
 
+    protected JComboBox cargoList = new JComboBox(cargos);
+
+    String[] UFs = {"BR", "SP" ,"MG","ES" , "BA" , "SE" , "AL" , "PB" , "PE" , "RN" , "CE" , "MA" , "PI" , "AM" , "PA" , "AC" , "RR" ,
+            "RO" , "TO" , "MS" , "MT" , "GO" , "DF" , "PR" , "SC" , "RS"};
+
+    protected JComboBox UFlist = new JComboBox(UFs);*/
 /*
     protected String[] nomeCampos = {
         "Candidato",
@@ -190,6 +198,12 @@ public class Janela extends JFrame
         pnlComponentes.add(lbUF);
         pnlComponentes.add(txtUF);*/
 
+        JPanel pnlBotoesCentralizados = new JPanel();
+        FlowLayout flwBtnCent = new FlowLayout();
+        pnlBotoesCentralizados.setLayout(flwBtnCent);
+        pnlBotoesCentralizados.add(btnAnterior);
+        pnlBotoesCentralizados.add(btnProximo);
+
         GroupLayout grpComponentes = new GroupLayout(pnlComponentes);
         pnlComponentes.setLayout(grpComponentes);
         grpComponentes.setAutoCreateGaps(true);
@@ -202,14 +216,14 @@ public class Janela extends JFrame
                                 .addComponent(lbPartido)
                                 .addComponent(lbCargo)
                                 .addComponent(lbUF)
-                                .addComponent(btnAnterior))
+                                .addComponent(pnlBotoesCentralizados))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCandidato, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNum)
                                 .addComponent(txtPartido)
                                 .addComponent(txtCargo)
-                                .addComponent(txtUF)
-                                .addComponent(btnProximo))
+                                .addComponent(txtUF))
+                        .addComponent(pnlBotoesCentralizados)
         );
         grpComponentes.setVerticalGroup(
                 grpComponentes.createSequentialGroup()
@@ -228,9 +242,7 @@ public class Janela extends JFrame
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbUF)
                                 .addComponent(txtUF))
-                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnAnterior)
-                                .addComponent(btnProximo))
+                        .addComponent(pnlBotoesCentralizados)
         );
 /*
         JPanel pnlResultado = new JPanel();
@@ -239,10 +251,15 @@ public class Janela extends JFrame
 
         pnlResultado.add(scroll);*/
 
+        JPanel pnlCentralizando = new JPanel();
+        FlowLayout flwCentralizando = new FlowLayout();
+        pnlCentralizando.setLayout(flwCentralizando);
+        pnlCentralizando.add(pnlComponentes);
+
         Container cntForm = this.getContentPane();
         cntForm.setLayout(new BorderLayout());
         cntForm.add(pnlBotoes,  BorderLayout.NORTH);
-        cntForm.add(pnlComponentes, BorderLayout.CENTER);
+        cntForm.add(pnlCentralizando, BorderLayout.CENTER);
         //cntForm.add(pnlResultado, BorderLayout.EAST);
         cntForm.add(pnlMensagem,  BorderLayout.SOUTH);
 
@@ -260,7 +277,7 @@ public class Janela extends JFrame
         situacaoAtual = SituacaoAtual.navegando;
         atualizarTela();
 
-        this.setSize(700, 300);
+        this.setSize(700, 280);
         this.setVisible(true);
     }
 
@@ -307,6 +324,7 @@ public class Janela extends JFrame
                     txtCargo.setEnabled(false);
                     txtPartido.setEnabled(false);
                     txtUF.setEnabled(false);
+                    lbCargo.setText("Cargo");
                     lbMensagem.setText("Mensagem: navegando");
                 break;
             }
@@ -323,12 +341,14 @@ public class Janela extends JFrame
                 txtNum.setEnabled(true);
                 txtCargo.setEnabled(true);
                 txtPartido.setEnabled(true);
-                txtUF.setEnabled(true);
+                txtUF.setEnabled(false);
+                lbCargo.setText("idCargo:");
                 lbMensagem.setText("Mensagem: Insira os dados do novo candidato");
                 break;
             }
             case alterando:
             {
+                txtCargo.setText("");
                 btnCriar.setEnabled(false);
                 btnAtualizar.setEnabled(false);
                 btnConsultar.setEnabled(false);
@@ -339,7 +359,8 @@ public class Janela extends JFrame
                 txtCandidato.setEnabled(true);
                 txtCargo.setEnabled(true);
                 txtPartido.setEnabled(true);
-                txtUF.setEnabled(true);
+                txtUF.setEnabled(false);
+                lbCargo.setText("idCargo:");
                 lbMensagem.setText("Mensagem: Insira os novos dados do candidato");
                 break;
             }
@@ -441,19 +462,38 @@ public class Janela extends JFrame
                     if (txtCandidato.getText() == "" || txtCargo.getText() == "" || txtPartido.getText() == "" || txtNum.getText() == "" || txtUF.getText() == "")
                         lbMensagem.setText("Mensagem: Preencha os dados de candidato!");
                     else {
-                        DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
                         try {
-                            DAOCandidatos.incluir(novoCandidato);
-                            candidatos = DAOCandidatos.getCandidatos();
-                            candidatos.first();
-                        } catch (Exception err) {
+                            DBOCargo cargo = DAOCargos.getCargo(Integer.valueOf(txtCargo.getText()));
+
+                        if(JOptionPane.showConfirmDialog(null,
+                                "Deseja incluir o candidato:\n" + "Nome: " + txtCandidato.getText() + "\n" +
+                                                                        "Número: " + txtNum.getText() + "\n" +
+                                                                        "Partido: " +  txtPartido.getText() + "\n" +
+                                                                        "Cargo: " + txtCargo.getText() + " - " + cargo.getNomeCargo() +  "\n" +
+                                                                        "UF: " + cargo.getUF(),
+                                "Inclusão de registro",
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                        {
+                            DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                            try {
+                                DAOCandidatos.incluir(novoCandidato);
+                                candidatos = DAOCandidatos.getCandidatos();
+                                candidatos.first();
+                            } catch (Exception err) {
+                                JOptionPane.showMessageDialog(null,
+                                        err.getMessage(),
+                                        "Erro de inclusão",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                            situacaoAtual = SituacaoAtual.navegando;
+                            atualizarTela();
+                        }
+                        } catch (Exception ex) {
                             JOptionPane.showMessageDialog(null,
-                                    err.getMessage(),
-                                    "Erro de inclusão",
+                                    ex.getMessage(),
+                                    "Cargo inexistente!",
                                     JOptionPane.ERROR_MESSAGE);
                         }
-                        situacaoAtual = SituacaoAtual.navegando;
-                        atualizarTela();
                     }
                     break;
                 }
@@ -462,20 +502,37 @@ public class Janela extends JFrame
                         lbMensagem.setText("Mensagem: Novo candidato inválido");
                     else
                     {
-                        DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                        DBOCargo cargo = null;
                         try {
-                            DAOCandidatos.atualizar(novoCandidato);
-                            candidatos = DAOCandidatos.getCandidatos();
-                        } 
-                        catch (Exception err)
-                        {
+                            cargo = DAOCargos.getCargo(Integer.valueOf(txtCargo.getText()));
+
+                        if(JOptionPane.showConfirmDialog(null,
+                                "Deseja incluir o candidato:\n" + "Nome: " + txtCandidato.getText() + "\n" +
+                                        "Número: " + txtNum.getText() + "\n" +
+                                        "Partido: " +  txtPartido.getText() + "\n" +
+                                        "Cargo: " + txtCargo.getText() + " - " + cargo.getNomeCargo() +  "\n" +
+                                        "UF: " + cargo.getUF(),
+                                "Atualização de registro",
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                            try {
+                                DAOCandidatos.atualizar(novoCandidato);
+                                candidatos = DAOCandidatos.getCandidatos();
+                            } catch (Exception err) {
+                                JOptionPane.showMessageDialog(null,
+                                        err.getMessage(),
+                                        "Erro de atualização",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                            situacaoAtual = SituacaoAtual.navegando;
+                            atualizarTela();
+                        }
+                        } catch (Exception ex) {
                             JOptionPane.showMessageDialog(null,
-                                    err.getMessage(),
-                                    "Erro de atualização",
+                                    ex.getMessage(),
+                                    "Cargo inexistente!",
                                     JOptionPane.ERROR_MESSAGE);
                         }
-                        situacaoAtual = SituacaoAtual.navegando;
-                        atualizarTela();
                     }
                 }
                 case consultando: {

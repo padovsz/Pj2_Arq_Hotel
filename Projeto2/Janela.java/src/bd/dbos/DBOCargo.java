@@ -107,7 +107,7 @@ public class DBOCargo implements Cloneable{
 
     public DBOCargo (DBOCargo modelo) throws Exception
     {
-        this.nomeCargo  = modelo.nomeCargo;
+        this.nomeCargo = modelo.nomeCargo;
         this.idCardo   = modelo.idCardo;
         this.UF        = modelo.UF;
     }
