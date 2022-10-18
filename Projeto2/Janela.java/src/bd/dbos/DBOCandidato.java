@@ -28,7 +28,7 @@ public class DBOCandidato implements Cloneable{
     {
         if(nomeCandidato.equals("") || nomeCandidato == null )
         {
-            throw new Exception ("Nome nao fornecido");
+            throw new Exception ("[ERRO]: Nome do candidato não fornecido");
         }
             this.nomeCandidato = nomeCandidato;
     }
@@ -37,7 +37,7 @@ public class DBOCandidato implements Cloneable{
     {
         if(numCandidato <= 0 )
         {
-            throw new Exception ("Numero do candidato invalido");
+            throw new Exception ("[ERRO]: Número do candidato inválido");
         }
         this.numCandidato = numCandidato;
     }
@@ -46,7 +46,7 @@ public class DBOCandidato implements Cloneable{
     {
         if(partido.equals("") || partido == null )
         {
-            throw new Exception ("Partido nao fornecido");
+            throw new Exception ("[ERRO]: Partido não fornecido");
         }
         this.partido = partido;
     }
@@ -55,7 +55,7 @@ public class DBOCandidato implements Cloneable{
     {
         if(numCandidato <= 0 )
         {
-            throw new Exception ("Numero do cargo invalido");
+            throw new Exception ("[ERRO]: Número do cargo inválido");
         }
         this.numCargo = numCargo;
     }

@@ -342,13 +342,18 @@ public class Janela extends JFrame
                 txtCargo.setEnabled(true);
                 txtPartido.setEnabled(true);
                 txtUF.setEnabled(false);
-                lbCargo.setText("idCargo:");
+                lbCargo.setText("Nº Cargo:");
                 lbMensagem.setText("Mensagem: Insira os dados do novo candidato");
                 break;
             }
             case alterando:
             {
-                txtCargo.setText("");
+                try {
+                    txtCargo.setText(Integer.toString(DAOCargos.getIdCargo(txtCargo.getText(), txtUF.getText())));
+                } catch (Exception err)
+                {
+                    txtCargo.setText("");
+                }
                 btnCriar.setEnabled(false);
                 btnAtualizar.setEnabled(false);
                 btnConsultar.setEnabled(false);
@@ -360,7 +365,7 @@ public class Janela extends JFrame
                 txtCargo.setEnabled(true);
                 txtPartido.setEnabled(true);
                 txtUF.setEnabled(false);
-                lbCargo.setText("idCargo:");
+                lbCargo.setText("N° Cargo:");
                 lbMensagem.setText("Mensagem: Insira os novos dados do candidato");
                 break;
             }
@@ -377,6 +382,8 @@ public class Janela extends JFrame
                 txtCargo.setEnabled(false);
                 txtPartido.setEnabled(false);
                 txtUF.setEnabled(false);
+                txtNum.setText("");
+                txtNum.grabFocus();
                 lbMensagem.setText("Mensagem: Insira o número do candidato que deseja consultar");
                 break;
             }
@@ -385,6 +392,7 @@ public class Janela extends JFrame
                 txtNum.setEnabled(false);
                 btnConsultar.setEnabled(true);
                 lbMensagem.setText("Pressione [Cancelar] para sair");
+                break;
             }
         }
     }
@@ -445,7 +453,7 @@ public class Janela extends JFrame
                 {
                     JOptionPane.showMessageDialog(null,
                             err.getMessage(),
-                            "Registro inválido!",
+                            "Registro inexistente!",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -459,8 +467,8 @@ public class Janela extends JFrame
         {
             switch (situacaoAtual) {
                 case criando: {
-                    if (txtCandidato.getText() == "" || txtCargo.getText() == "" || txtPartido.getText() == "" || txtNum.getText() == "" || txtUF.getText() == "")
-                        lbMensagem.setText("Mensagem: Preencha os dados de candidato!");
+                    if (txtCandidato.getText().equals("") || txtCargo.getText().equals("") || txtPartido.getText().equals("") || txtNum.getText().equals(""))
+                        lbMensagem.setText("Mensagem: Preencha todos os dados de candidato!");
                     else {
                         try {
                             DBOCargo cargo = DAOCargos.getCargo(Integer.valueOf(txtCargo.getText()));
@@ -518,10 +526,11 @@ public class Janela extends JFrame
                             try {
                                 DAOCandidatos.atualizar(novoCandidato);
                                 candidatos = DAOCandidatos.getCandidatos();
+                                candidatos.first();
                             } catch (Exception err) {
                                 JOptionPane.showMessageDialog(null,
                                         err.getMessage(),
-                                        "Erro de atualização",
+                                        "Erro ao atualizar candidato!",
                                         JOptionPane.ERROR_MESSAGE);
                             }
                             situacaoAtual = SituacaoAtual.navegando;
@@ -534,6 +543,7 @@ public class Janela extends JFrame
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     }
+                    break;
                 }
                 case consultando: {
                     if (txtNum.getText() == "")
@@ -557,10 +567,11 @@ public class Janela extends JFrame
                         {
                             JOptionPane.showMessageDialog(null,
                                     err.getMessage(),
-                                    "Erro na consulta",
+                                    "Erro ao consultar",
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     }
+                    break;
                 }
             }
         }

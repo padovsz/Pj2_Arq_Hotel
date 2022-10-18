@@ -22,7 +22,7 @@ public class DBOCargo implements Cloneable{
     {
         if(nomeCargo.equals("") || nomeCargo == null )
         {
-            throw new Exception ("Nome nao fornecido");
+            throw new Exception ("[ERRO]: Nome do cargo não fornecido");
         }
         this.nomeCargo = nomeCargo;
     }
@@ -31,7 +31,7 @@ public class DBOCargo implements Cloneable{
     {
         if(idCardo <= 0 )
         {
-            throw new Exception("Numero do cargo invalido");
+            throw new Exception("[ERRO]: Número do cargo inválido");
         }
         this.idCardo = idCardo;
     }
@@ -40,12 +40,13 @@ public class DBOCargo implements Cloneable{
     {
         if(UF.equals("") || UF == null )
         {
-            throw new Exception ("UF nao fornecido");
+            throw new Exception ("[ERRO]: UF não fornecida");
         }
         this.UF = UF;
     }
 
-    public DBOCargo(String nome, int num, String uf){
+    public DBOCargo(String nome, int num, String uf) throws Exception
+    {
         try
         {
             this.setNomeCargo(nome);
@@ -54,7 +55,7 @@ public class DBOCargo implements Cloneable{
         }
         catch (Exception erro)
         {
-            System.err.println(erro.getMessage());
+            throw new Exception(erro.getMessage());
         }
     }
 
@@ -107,6 +108,9 @@ public class DBOCargo implements Cloneable{
 
     public DBOCargo (DBOCargo modelo) throws Exception
     {
+        if(modelo == null)
+            throw new Exception("[ERRO]: Modelo não fornecido");
+
         this.nomeCargo = modelo.nomeCargo;
         this.idCardo   = modelo.idCardo;
         this.UF        = modelo.UF;

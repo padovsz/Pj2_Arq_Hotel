@@ -28,7 +28,7 @@ public class DAOCargos {
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar candidato");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para consulta");
         }
         return retorno;
     }
@@ -36,7 +36,7 @@ public class DAOCargos {
     public static void incluir (DBOCargo cargo) throws Exception
     {
         if (cargo == null)
-            throw new Exception("Cargo nao fornecido");
+            throw new Exception("[ERRO]: Cargo nao foi fornecido!");
 
         try
         {
@@ -59,14 +59,14 @@ public class DAOCargos {
         catch (SQLException erro)
         {
             BDSQLServer.COMANDO.rollback();
-            throw new Exception("Erro ao inserir cargo");
+            throw new Exception("[ERRO]: Problemas ao acessar o Banco de Dados para inserção!");
         }
     }
 
     public static void excluir(int idCargo) throws Exception
     {
         if (!cadastrado (idCargo))
-            throw new Exception ("Nao cadastrado");
+            throw new Exception ("[ERRO]: Cargo não cadastrado");
 
         try
         {
@@ -84,17 +84,17 @@ public class DAOCargos {
         catch (SQLException erro)
         {
             BDSQLServer.COMANDO.rollback();
-            throw new Exception ("Erro ao excluir cargo");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para exclusão!");
         }
     }
 
     public static void atualizar (DBOCargo cargo) throws Exception
     {
         if (cargo==null)
-            throw new Exception ("Cargo nao fornecido");
+            throw new Exception ("[ERRO]: Cargo não fornecido");
 
         if (!cadastrado (cargo.getIdCardo()))
-            throw new Exception ("Nao cadastrado");
+            throw new Exception ("[ERRO]: Cargo não cadastrado");
 
         try
         {
@@ -117,11 +117,11 @@ public class DAOCargos {
         catch (SQLException erro)
         {
             BDSQLServer.COMANDO.rollback();
-            throw new Exception ("Erro ao atualizar dados do cargo");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para atualização!");
         }
     }
 
-    /*public static int getIdCargo(String nomeCargo, String UF) throws Exception
+    public static int getIdCargo(String nomeCargo, String UF) throws Exception
     {
         int retorno;
 
@@ -140,16 +140,19 @@ public class DAOCargos {
 
             MeuResultSet resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
 
+            if(!resultado.first())
+                throw new Exception("[ERRO]: Cargo não existente");
+
             retorno = resultado.getInt("idCargo");
         }
         catch (SQLException err)
         {
-            throw new Exception("Erro ao procurar IdCargo");
+            throw new Exception("[ERRO]: Problemas ao acessar o Banco de Dados para consultar cargo!");
         }
 
         return retorno;
     }
-*/
+
     public static DBOCargo getCargo(int idCargo) throws Exception
     {
         DBOCargo retorno = null;
@@ -168,7 +171,7 @@ public class DAOCargos {
             MeuResultSet resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
 
             if(!resultado.first())
-                throw new Exception("Não cadastrado!");
+                throw new Exception("[ERRO]: Cargo não cadastrado!");
 
             retorno = new DBOCargo(resultado.getString("nome_cargo"),
                     resultado.getInt("idCargo"),
@@ -176,7 +179,7 @@ public class DAOCargos {
         }
         catch (SQLException err)
         {
-            throw new Exception("Erro ao procurar cargo");
+            throw new Exception("[ERRO]: Problemas ao acessar o Banco de Dados para consultar cargo!");
         }
 
         return retorno;
@@ -199,7 +202,7 @@ public class DAOCargos {
         }
         catch (SQLException err)
         {
-            throw new Exception("Erro ao recuperar cargos");
+            throw new Exception("[ERRO]: Problemas ao acessar o Banco de Dados para recuperar cargos!");
         }
 
         return retorno;

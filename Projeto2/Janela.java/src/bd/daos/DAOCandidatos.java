@@ -28,7 +28,7 @@ public class DAOCandidatos
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar candidato");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para consultar candidatos!");
         }
         return retorno;
     }
@@ -36,7 +36,7 @@ public class DAOCandidatos
     public static void incluir (DBOCandidato candidato) throws Exception
     {
         if (candidato == null)
-            throw new Exception("Candidato nao fornecido");
+            throw new Exception("[ERRO]: Candidato não fornecido!");
 
         try
         {
@@ -60,14 +60,14 @@ public class DAOCandidatos
         catch (SQLException erro)
         {
             BDSQLServer.COMANDO.rollback();
-            throw new Exception("Erro ao inserir candidato");
+            throw new Exception("[ERRO]: Problemas ao acessar o Banco de Dados para inserir candidatos!");
         }
     }
 
         public static void excluir(int numCandidato) throws Exception
         {
             if (!cadastrado (numCandidato))
-                throw new Exception ("Nao cadastrado");
+                throw new Exception ("[ERRO]: Candidato não cadastrado");
 
             try
             {
@@ -85,17 +85,17 @@ public class DAOCandidatos
             catch (SQLException erro)
             {
                 BDSQLServer.COMANDO.rollback();
-                throw new Exception ("Erro ao excluir candidato");
+                throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para excluir candidatos!");
             }
         }
 
     public static void atualizar (DBOCandidato cand) throws Exception
     {
         if (cand==null)
-            throw new Exception ("Candidato nao fornecido");
+            throw new Exception ("[ERRO]: Candidato não fornecido");
 
         if (!cadastrado (cand.getNumCandidato()))
-            throw new Exception ("Nao cadastrado");
+            throw new Exception ("[ERRO]: Candidato não cadastrado");
 
         try
         {
@@ -120,7 +120,7 @@ public class DAOCandidatos
         catch (SQLException erro)
         {
             BDSQLServer.COMANDO.rollback();
-            throw new Exception ("Erro ao atualizar dados do candidato");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para atualizar candidatos!");
         }
     }
 
@@ -143,7 +143,7 @@ public class DAOCandidatos
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("Nao cadastrado");
+                throw new Exception ("[ERRO]: Candidato não cadastrado");
 
             candidato = new DBOCandidato (resultado.getString("nome_candidato"),
                     resultado.getInt ("idNumero"),
@@ -152,7 +152,7 @@ public class DAOCandidatos
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao procurar candidato");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para consultar candidatos!");
         }
 
         return candidato;
@@ -180,7 +180,7 @@ public class DAOCandidatos
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao recuperar candidato");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para recuperar candidatos!");
         }
 
         return resultado;
@@ -204,7 +204,7 @@ public class DAOCandidatos
         }
         catch (SQLException erro)
         {
-            throw new Exception ("Erro ao recuperar candidato");
+            throw new Exception ("[ERRO]: Problemas ao acessar o Banco de Dados para recuperar candidatos!");
         }
 
         return resultado;
