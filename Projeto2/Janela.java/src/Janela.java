@@ -164,6 +164,11 @@ public class Janela extends JFrame
         btnProximo.addActionListener(new ProximoRegistro());
         btnAnterior.addActionListener(new AnteriorRegistro());
 
+        txtCandidato.addKeyListener(new MaxLength());
+        txtNum.addKeyListener(new MaxLength());
+        txtCargo.addKeyListener(new MaxLength());
+        txtPartido.addKeyListener(new MaxLength());
+
         JPanel pnlBotoes = new JPanel();
         FlowLayout flwBotoes = new FlowLayout();
         pnlBotoes.setLayout(flwBotoes);
@@ -271,7 +276,10 @@ public class Janela extends JFrame
         }
         catch (Exception err)
         {
-            System.out.println(err.getMessage());
+            JOptionPane.showMessageDialog (null,
+                    err.getMessage(),
+                    "Erro ao exibir candidatos",
+                    JOptionPane.WARNING_MESSAGE);
         }
 
         situacaoAtual = SituacaoAtual.navegando;
@@ -319,11 +327,11 @@ public class Janela extends JFrame
                     btnCancelar.setEnabled(true);
                     btnCriar.setEnabled(true);
                     btnSalvar.setEnabled(true);
-                    txtCandidato.setEnabled(false);
-                    txtNum.setEnabled(false);
-                    txtCargo.setEnabled(false);
-                    txtPartido.setEnabled(false);
-                    txtUF.setEnabled(false);
+                    txtCandidato.setEditable(false);
+                    txtNum.setEditable(false);
+                    txtCargo.setEditable(false);
+                    txtPartido.setEditable(false);
+                    txtUF.setEditable(false);
                     lbCargo.setText("Cargo");
                     lbMensagem.setText("Mensagem: navegando");
                 break;
@@ -337,11 +345,11 @@ public class Janela extends JFrame
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtCandidato.setEnabled(true);
-                txtNum.setEnabled(true);
-                txtCargo.setEnabled(true);
-                txtPartido.setEnabled(true);
-                txtUF.setEnabled(false);
+                txtCandidato.setEditable(true);
+                txtNum.setEditable(true);
+                txtCargo.setEditable(true);
+                txtPartido.setEditable(true);
+                txtUF.setEditable(false);
                 lbCargo.setText("Nº Cargo:");
                 lbMensagem.setText("Mensagem: Insira os dados do novo candidato");
                 break;
@@ -360,11 +368,11 @@ public class Janela extends JFrame
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtNum.setEnabled(false);
-                txtCandidato.setEnabled(true);
-                txtCargo.setEnabled(true);
-                txtPartido.setEnabled(true);
-                txtUF.setEnabled(false);
+                txtNum.setEditable(false);
+                txtCandidato.setEditable(true);
+                txtCargo.setEditable(true);
+                txtPartido.setEditable(true);
+                txtUF.setEditable(false);
                 lbCargo.setText("N° Cargo:");
                 lbMensagem.setText("Mensagem: Insira os novos dados do candidato");
                 break;
@@ -377,11 +385,11 @@ public class Janela extends JFrame
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtNum.setEnabled(true);
-                txtCandidato.setEnabled(false);
-                txtCargo.setEnabled(false);
-                txtPartido.setEnabled(false);
-                txtUF.setEnabled(false);
+                txtNum.setEditable(true);
+                txtCandidato.setEditable(false);
+                txtCargo.setEditable(false);
+                txtPartido.setEditable(false);
+                txtUF.setEditable(false);
                 txtNum.setText("");
                 txtNum.grabFocus();
                 lbMensagem.setText("Mensagem: Insira o número do candidato que deseja consultar");
@@ -389,7 +397,7 @@ public class Janela extends JFrame
             }
             case exibindo:
             {
-                txtNum.setEnabled(false);
+                txtNum.setEditable(false);
                 btnConsultar.setEnabled(true);
                 lbMensagem.setText("Pressione [Cancelar] para sair");
                 break;
@@ -498,7 +506,7 @@ public class Janela extends JFrame
                         }
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(null,
-                                    ex.getMessage(),
+                                    "Cargo fornecido não existe",
                                     "Cargo inexistente!",
                                     JOptionPane.ERROR_MESSAGE);
                         }
@@ -506,7 +514,7 @@ public class Janela extends JFrame
                     break;
                 }
                 case alterando: {
-                    if (txtCandidato.getText() == "" || txtCargo.getText() == "" || txtPartido.getText() == "" || txtNum.getText() == "" || txtUF.getText() == "")
+                    if (txtCandidato.getText().equals("") || txtCargo.getText().equals("") || txtPartido.getText().equals("") || txtNum.getText().equals("") || txtUF.getText().equals(""))
                         lbMensagem.setText("Mensagem: Novo candidato inválido");
                     else
                     {
@@ -611,6 +619,30 @@ public class Janela extends JFrame
             }
             atualizarTela();
         }
+    }
+
+    protected class MaxLength implements KeyListener
+    {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (txtCandidato.getText().length() >= 30)
+                txtCandidato.setText(txtCandidato.getText().substring(0,29));
+
+            if (txtNum.getText().length() >= 5)
+                txtNum.setText(txtNum.getText().substring(0,4));
+
+            if (txtCargo.getText().length() >= 2)
+                txtCargo.setText(txtCargo.getText().substring(0,1));
+
+            if (txtPartido.getText().length() >= 15)
+                txtPartido.setText(txtPartido.getText().substring(0,14));
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {}
+
+        @Override
+        public void keyTyped(KeyEvent e) {}
     }
 
     protected class FechamentoDeJanela extends WindowAdapter
