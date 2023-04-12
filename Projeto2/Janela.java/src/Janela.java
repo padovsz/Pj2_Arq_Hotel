@@ -1,18 +1,13 @@
 import bd.core.MeuResultSet;
-import bd.daos.DAOCandidatos;
-import bd.daos.DAOCargos;
-import bd.dbos.DBOCandidato;
-import bd.dbos.DBOCargo;
+import bd.daos.DAOHoteis;
+import bd.dbos.DBOHotel;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.imageio.*;
-import javax.swing.text.MaskFormatter;
 import java.io.*;
 import java.sql.SQLException;
-import java.text.ParseException;
-import javax.swing.ScrollPaneConstants;
 
 public class Janela extends JFrame
 {
@@ -28,17 +23,23 @@ public class Janela extends JFrame
     protected JButton btnAnterior  = new JButton("<");
 
     protected JLabel lbMensagem = new JLabel("Mensagem:");
-    protected JLabel lbCandidato = new JLabel("Candidato:");
+    protected JLabel lbHotel = new JLabel("Nome:");
+    protected JLabel lbCEP = new JLabel("CEP:");
+    protected JLabel lbRua = new JLabel("Rua:");
     protected JLabel lbNum = new JLabel("Num:");
-    protected JLabel lbPartido = new JLabel("Partido:");
-    protected JLabel lbCargo = new JLabel("Cargo:");
-    protected JLabel lbUF = new JLabel("UF:");
+    protected JLabel lbComplemento = new JLabel("Complemento:");
+    protected JLabel lbCidade = new JLabel("Cidade:");
+    protected JLabel lbEstado = new JLabel("Estado:");
+    protected JLabel lbTelefone = new JLabel("Telefone:");
 
-    protected JTextField txtCandidato = new JTextField();
+    protected JTextField txtHotel = new JTextField();
+    protected JTextField txtCep = new JTextField();
+    protected JTextField txtRua = new JTextField();
     protected JTextField txtNum = new JTextField();
-    protected JTextField txtPartido = new JTextField();
-    protected JTextField txtCargo = new JTextField();
-    protected JTextField txtUF = new JTextField();
+    protected JTextField txtComplemento = new JTextField();
+    protected JTextField txtCidade = new JTextField();
+    protected JTextField txtEstado = new JTextField();
+    protected JTextField txtTelefone = new JTextField();
 /*
     String[] cargos = {"1 - Presidente", "2 - Governador", "3 - Senador", "4 - Deputado Federal", "5 - Deputado Estadual"};
 
@@ -85,7 +86,7 @@ public class Janela extends JFrame
                                          ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                                          ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 */
-    MeuResultSet candidatos;
+    MeuResultSet Hoteis;
     public Janela()
     {
         super("Consulta");
@@ -164,10 +165,14 @@ public class Janela extends JFrame
         btnProximo.addActionListener(new ProximoRegistro());
         btnAnterior.addActionListener(new AnteriorRegistro());
 
-        txtCandidato.addKeyListener(new MaxLength());
+        txtHotel.addKeyListener(new MaxLength());
+        txtRua.addKeyListener(new MaxLength());
+        txtComplemento.addKeyListener(new MaxLength());
         txtNum.addKeyListener(new MaxLength());
-        txtCargo.addKeyListener(new MaxLength());
-        txtPartido.addKeyListener(new MaxLength());
+        txtCidade.addKeyListener(new MaxLength());
+        txtEstado.addKeyListener(new MaxLength());
+        txtTelefone.addKeyListener(new MaxLength());
+        txtCep.addKeyListener(new MaxLength());
 
         JPanel pnlBotoes = new JPanel();
         FlowLayout flwBotoes = new FlowLayout();
@@ -216,37 +221,52 @@ public class Janela extends JFrame
         grpComponentes.setHorizontalGroup(
                 grpComponentes.createSequentialGroup()
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(lbCandidato)
+                                .addComponent(lbHotel)
                                 .addComponent(lbNum)
-                                .addComponent(lbPartido)
-                                .addComponent(lbCargo)
-                                .addComponent(lbUF)
+                                .addComponent(lbCEP)
+                                .addComponent(lbRua)
+                                .addComponent(lbComplemento)
+                                .addComponent(lbCidade)
+                                .addComponent(lbEstado)
+                                .addComponent(lbTelefone)
                                 .addComponent(pnlBotoesCentralizados))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(txtCandidato, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtHotel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNum)
-                                .addComponent(txtPartido)
-                                .addComponent(txtCargo)
-                                .addComponent(txtUF))
+                                .addComponent(txtCep)
+                                .addComponent(txtRua)
+                                .addComponent(txtComplemento)
+                                .addComponent(txtCidade)
+                                .addComponent(txtEstado)
+                                .addComponent(txtTelefone))
                         .addComponent(pnlBotoesCentralizados)
         );
         grpComponentes.setVerticalGroup(
                 grpComponentes.createSequentialGroup()
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbCandidato)
-                                .addComponent(txtCandidato))
+                                .addComponent(lbHotel)
+                                .addComponent(txtHotel))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbNum)
                                 .addComponent(txtNum))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbPartido)
-                                .addComponent(txtPartido))
+                                .addComponent(lbCEP)
+                                .addComponent(txtCep))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbCargo)
-                                .addComponent(txtCargo))
+                                .addComponent(lbRua)
+                                .addComponent(txtRua))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbUF)
-                                .addComponent(txtUF))
+                                .addComponent(lbComplemento)
+                                .addComponent(txtComplemento))
+                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbCidade)
+                                .addComponent(txtCidade))
+                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbEstado)
+                                .addComponent(txtEstado))
+                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbTelefone)
+                                .addComponent(txtTelefone))
                         .addComponent(pnlBotoesCentralizados)
         );
 /*
@@ -271,8 +291,8 @@ public class Janela extends JFrame
         this.addWindowListener(new FechamentoDeJanela());
 
         try{
-            candidatos = DAOCandidatos.getCandidatos();
-            candidatos.first();
+            Hoteis = DAOHoteis.getHoteis();
+            Hoteis.first();
         }
         catch (Exception err)
         {
@@ -285,17 +305,20 @@ public class Janela extends JFrame
         situacaoAtual = SituacaoAtual.navegando;
         atualizarTela();
 
-        this.setSize(700, 280);
+        this.setSize(700, 350);
         this.setVisible(true);
     }
 
     protected void limparTela()
     {
-        txtCandidato.setText("");
-        txtCargo.setText("");
+        txtHotel.setText("");
+        txtComplemento.setText("");
+        txtRua.setText("");
         txtNum.setText("");
-        txtPartido.setText("");
-        txtUF.setText("");
+        txtCidade.setText("");
+        txtEstado.setText("");
+        txtTelefone.setText("");
+        txtCep.setText("");
     }
 
     protected void atualizarTela()
@@ -307,18 +330,21 @@ public class Janela extends JFrame
                     btnProximo.setEnabled(true);
                     btnAnterior.setEnabled(true);
                     try {
-                        if (candidatos.isFirst()) {
+                        if (Hoteis.isFirst()) {
                             btnAnterior.setEnabled(false);
                         }
-                        if (candidatos.isLast()) {
+                        if (Hoteis.isLast()) {
                             btnProximo.setEnabled(false);
                         }
 
-                        txtCandidato.setText(candidatos.getString("Nome do Candidato"));
-                        txtNum.setText(Integer.toString(candidatos.getInt("número")));
-                        txtPartido.setText(candidatos.getString("partido"));
-                        txtCargo.setText(candidatos.getString("Cargo"));
-                        txtUF.setText(candidatos.getString("UF"));
+                        txtHotel.setText(Hoteis.getString("Nome Hotel"));
+                        txtNum.setText(Integer.toString(Hoteis.getInt("numero")));
+                        txtCep.setText(Hoteis.getString("cep"));
+                        txtComplemento.setText(Hoteis.getString("complemento"));
+                        txtCidade.setText(Hoteis.getString("cidade")); //Informaçao do json
+                        txtEstado.setText(Hoteis.getString("estado")); //Informaçao do json
+                        txtRua.setText(Hoteis.getString("rua"));
+                        txtTelefone.setText(Hoteis.getString("numero"));  //Informação json
                     } catch (Exception err)
                     {}
                     btnAtualizar.setEnabled(true);
@@ -327,12 +353,12 @@ public class Janela extends JFrame
                     btnCancelar.setEnabled(true);
                     btnCriar.setEnabled(true);
                     btnSalvar.setEnabled(true);
-                    txtCandidato.setEditable(false);
+                    txtHotel.setEditable(false);
+                    txtRua.setEditable(false);
+                    txtComplemento.setEditable(false);
                     txtNum.setEditable(false);
-                    txtCargo.setEditable(false);
-                    txtPartido.setEditable(false);
-                    txtUF.setEditable(false);
-                    lbCargo.setText("Cargo");
+                    txtCidade.setEditable(false);
+                    lbComplemento.setText("Complemento");
                     lbMensagem.setText("Mensagem: navegando");
                 break;
             }
@@ -345,36 +371,30 @@ public class Janela extends JFrame
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtCandidato.setEditable(true);
+                txtHotel.setEditable(true);
+                txtRua.setEditable(true);
+                txtComplemento.setEditable(true);
                 txtNum.setEditable(true);
-                txtCargo.setEditable(true);
-                txtPartido.setEditable(true);
-                txtUF.setEditable(false);
-                lbCargo.setText("Nº Cargo:");
-                lbMensagem.setText("Mensagem: Insira os dados do novo candidato");
+                txtCidade.setEditable(false);
+                lbComplemento.setText("Nº Hotel:");
+                lbMensagem.setText("Mensagem: Insira os dados do novo hotel");
                 break;
             }
             case alterando:
             {
-                try {
-                    txtCargo.setText(Integer.toString(DAOCargos.getIdCargo(txtCargo.getText(), txtUF.getText())));
-                } catch (Exception err)
-                {
-                    txtCargo.setText("");
-                }
                 btnCriar.setEnabled(false);
                 btnAtualizar.setEnabled(false);
                 btnConsultar.setEnabled(false);
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtNum.setEditable(false);
-                txtCandidato.setEditable(true);
-                txtCargo.setEditable(true);
-                txtPartido.setEditable(true);
-                txtUF.setEditable(false);
-                lbCargo.setText("N° Cargo:");
-                lbMensagem.setText("Mensagem: Insira os novos dados do candidato");
+                txtRua.setEditable(false);
+                txtHotel.setEditable(true);
+                txtComplemento.setEditable(true);
+                txtNum.setEditable(true);
+                txtCidade.setEditable(false);
+                lbComplemento.setText("N° Hotel:");
+                lbMensagem.setText("Mensagem: Insira os novos dados do hotel");
                 break;
             }
             case consultando:
@@ -385,19 +405,19 @@ public class Janela extends JFrame
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtNum.setEditable(true);
-                txtCandidato.setEditable(false);
-                txtCargo.setEditable(false);
-                txtPartido.setEditable(false);
-                txtUF.setEditable(false);
-                txtNum.setText("");
-                txtNum.grabFocus();
-                lbMensagem.setText("Mensagem: Insira o número do candidato que deseja consultar");
+                txtRua.setEditable(true);
+                txtHotel.setEditable(false);
+                txtComplemento.setEditable(false);
+                txtNum.setEditable(false);
+                txtCidade.setEditable(false);
+                txtRua.setText("");
+                txtRua.grabFocus();
+                lbMensagem.setText("Mensagem: Insira o número do hotel que deseja consultar");
                 break;
             }
             case exibindo:
             {
-                txtNum.setEditable(false);
+                txtRua.setEditable(false);
                 btnConsultar.setEnabled(true);
                 lbMensagem.setText("Pressione [Cancelar] para sair");
                 break;
@@ -451,9 +471,9 @@ public class Janela extends JFrame
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
                 try {
-                    DAOCandidatos.excluir(Integer.valueOf(txtNum.getText()));
-                    candidatos = DAOCandidatos.getCandidatos();
-                    candidatos.first();
+                    DAOHoteis.excluir(Integer.valueOf(txtNum.getText()), Integer.valueOf(txtCep.getText()));
+                    Hoteis = DAOHoteis.getHoteis();
+                    Hoteis.first();
                     situacaoAtual = SituacaoAtual.navegando;
                     atualizarTela();
                 }
@@ -475,26 +495,26 @@ public class Janela extends JFrame
         {
             switch (situacaoAtual) {
                 case criando: {
-                    if (txtCandidato.getText().equals("") || txtCargo.getText().equals("") || txtPartido.getText().equals("") || txtNum.getText().equals(""))
+                    if (txtHotel.getText().equals("") || txtComplemento.getText().equals("") || txtNum.getText().equals("") || txtRua.getText().equals(""))
                         lbMensagem.setText("Mensagem: Preencha todos os dados de candidato!");
                     else {
                         try {
-                            DBOCargo cargo = DAOCargos.getCargo(Integer.valueOf(txtCargo.getText()));
+                            DBOHotel cargo = DAOHoteis.getCargo(Integer.valueOf(txtComplemento.getText()));
 
                         if(JOptionPane.showConfirmDialog(null,
-                                "Deseja incluir o candidato:\n" + "Nome: " + txtCandidato.getText() + "\n" +
-                                                                        "Número: " + txtNum.getText() + "\n" +
-                                                                        "Partido: " +  txtPartido.getText() + "\n" +
-                                                                        "Cargo: " + txtCargo.getText() + " - " + cargo.getNomeCargo() +  "\n" +
+                                "Deseja incluir o candidato:\n" + "Nome: " + txtHotel.getText() + "\n" +
+                                                                        "Número: " + txtRua.getText() + "\n" +
+                                                                        "Partido: " +  txtNum.getText() + "\n" +
+                                                                        "Cargo: " + txtComplemento.getText() + " - " + cargo.getNomeCargo() +  "\n" +
                                                                         "UF: " + cargo.getUF(),
                                 "Inclusão de registro",
                                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
                         {
-                            DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                            DBOHotel novoCandidato = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtRua.getText()), txtNum.getText(), Integer.parseInt(txtComplemento.getText()));
                             try {
-                                DAOCandidatos.incluir(novoCandidato);
-                                candidatos = DAOCandidatos.getCandidatos();
-                                candidatos.first();
+                                DAOHoteis.incluir(novoCandidato);
+                                Hoteis = DAOHoteis.getCandidatos();
+                                Hoteis.first();
                             } catch (Exception err) {
                                 JOptionPane.showMessageDialog(null,
                                         err.getMessage(),
@@ -514,27 +534,27 @@ public class Janela extends JFrame
                     break;
                 }
                 case alterando: {
-                    if (txtCandidato.getText().equals("") || txtCargo.getText().equals("") || txtPartido.getText().equals("") || txtNum.getText().equals("") || txtUF.getText().equals(""))
+                    if (txtHotel.getText().equals("") || txtComplemento.getText().equals("") || txtNum.getText().equals("") || txtRua.getText().equals("") || txtCidade.getText().equals(""))
                         lbMensagem.setText("Mensagem: Novo candidato inválido");
                     else
                     {
                         DBOCargo cargo = null;
                         try {
-                            cargo = DAOCargos.getCargo(Integer.valueOf(txtCargo.getText()));
+                            cargo = DAOCargos.getCargo(Integer.valueOf(txtComplemento.getText()));
 
                         if(JOptionPane.showConfirmDialog(null,
-                                "Deseja incluir o candidato:\n" + "Nome: " + txtCandidato.getText() + "\n" +
-                                        "Número: " + txtNum.getText() + "\n" +
-                                        "Partido: " +  txtPartido.getText() + "\n" +
-                                        "Cargo: " + txtCargo.getText() + " - " + cargo.getNomeCargo() +  "\n" +
+                                "Deseja incluir o candidato:\n" + "Nome: " + txtHotel.getText() + "\n" +
+                                        "Número: " + txtRua.getText() + "\n" +
+                                        "Partido: " +  txtNum.getText() + "\n" +
+                                        "Cargo: " + txtComplemento.getText() + " - " + cargo.getNomeCargo() +  "\n" +
                                         "UF: " + cargo.getUF(),
                                 "Atualização de registro",
                                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                            DBOCandidato novoCandidato = new DBOCandidato(txtCandidato.getText(), Integer.parseInt(txtNum.getText()), txtPartido.getText(), Integer.parseInt(txtCargo.getText()));
+                            DBOHotel novoCandidato = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtRua.getText()), txtNum.getText(), Integer.parseInt(txtComplemento.getText()));
                             try {
-                                DAOCandidatos.atualizar(novoCandidato);
-                                candidatos = DAOCandidatos.getCandidatos();
-                                candidatos.first();
+                                DAOHoteis.atualizar(novoCandidato);
+                                Hoteis = DAOHoteis.getCandidatos();
+                                Hoteis.first();
                             } catch (Exception err) {
                                 JOptionPane.showMessageDialog(null,
                                         err.getMessage(),
@@ -554,19 +574,19 @@ public class Janela extends JFrame
                     break;
                 }
                 case consultando: {
-                    if (txtNum.getText() == "")
+                    if (txtRua.getText() == "")
                         lbMensagem.setText("Mensagem: Digite o número do candidato que deseja consultar!");
                     else
                     {
                         try {
-                            DBOCandidato candidato = DAOCandidatos.getCandidato(Integer.valueOf(txtNum.getText()));
+                            DBOHotel candidato = DAOHoteis.getHotel(Integer.valueOf(txtRua.getText()));
 
-                            txtCandidato.setText(candidato.getNomeCandidato());
-                            txtNum.setText(Integer.toString(candidato.getNumCandidato()));
-                            txtPartido.setText(candidato.getPartido());
-                            DBOCargo cargo = DAOCargos.getCargo(candidato.getNumCargo());
-                            txtCargo.setText(cargo.getNomeCargo());
-                            txtUF.setText(cargo.getUF());
+                            txtHotel.setText(candidato.getNomeHotel());
+                            txtRua.setText(Integer.toString(candidato.getNumero()));
+                            txtNum.setText(candidato.getTelefone());
+                            DBOCargo cargo = DAOCargos.getCargo(candidato.getCEP());
+                            txtComplemento.setText(cargo.getNomeCargo());
+                            txtCidade.setText(cargo.getUF());
 
                             situacaoAtual = SituacaoAtual.exibindo;
                             atualizarTela();
@@ -600,7 +620,7 @@ public class Janela extends JFrame
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                candidatos.next();
+                Hoteis.next();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -613,7 +633,7 @@ public class Janela extends JFrame
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                candidatos.previous();
+                Hoteis.previous();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -625,17 +645,20 @@ public class Janela extends JFrame
     {
         @Override
         public void keyPressed(KeyEvent e) {
-            if (txtCandidato.getText().length() >= 30)
-                txtCandidato.setText(txtCandidato.getText().substring(0,29));
+            if (txtHotel.getText().length() >= 50)
+                txtHotel.setText(txtHotel.getText().substring(0,49));
+
+            if (txtComplemento.getText().length() >= 10)
+                txtComplemento.setText(txtComplemento.getText().substring(0,9));
 
             if (txtNum.getText().length() >= 5)
                 txtNum.setText(txtNum.getText().substring(0,4));
 
-            if (txtCargo.getText().length() >= 2)
-                txtCargo.setText(txtCargo.getText().substring(0,1));
+            if(txtCep.getText().length() >= 8)
+                txtCep.setText(txtCep.getText().substring(0, 7));
 
-            if (txtPartido.getText().length() >= 15)
-                txtPartido.setText(txtPartido.getText().substring(0,14));
+            if(txtTelefone.getText().length() >= 20)
+                txtTelefone.setText(txtTelefone.getText().substring(0,19));
         }
 
         @Override
