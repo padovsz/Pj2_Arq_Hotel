@@ -7,7 +7,7 @@ import bd.dbos.*;
 
 public class DAOHoteis
 {
-    public static boolean cadastrado(int numero, int cep) throws Exception
+    public static boolean cadastrado(String numero, String cep) throws Exception
     {
         boolean retorno = false;
 
@@ -21,8 +21,8 @@ public class DAOHoteis
 
             BDSQLServer.COMANDO.prepareStatement(sql);
 
-            BDSQLServer.COMANDO.setInt(1, numero);
-            BDSQLServer.COMANDO.setInt(2, cep);
+            BDSQLServer.COMANDO.setString(1, numero);
+            BDSQLServer.COMANDO.setString(2, cep);
 
             MeuResultSet resultado = (MeuResultSet) BDSQLServer.COMANDO.executeQuery();
 
@@ -52,8 +52,8 @@ public class DAOHoteis
             BDSQLServer.COMANDO.prepareStatement(sql);
 
             BDSQLServer.COMANDO.setString(1, hotel.getNomeHotel());
-            BDSQLServer.COMANDO.setInt(2, hotel.getCEP());
-            BDSQLServer.COMANDO.setInt(3, hotel.getNumero());
+            BDSQLServer.COMANDO.setString(2, ((Integer) hotel.getCEP()).toString());
+            BDSQLServer.COMANDO.setString(3, ((Integer) hotel.getNumero()).toString());
             BDSQLServer.COMANDO.setString(4, hotel.getComplemento());
             BDSQLServer.COMANDO.setString(5, hotel.getTelefone());
 
@@ -67,7 +67,7 @@ public class DAOHoteis
         }
     }
 
-        public static void excluir(int numero, int cep) throws Exception
+        public static void excluir(String numero, String cep) throws Exception
         {
             if (!cadastrado (numero,cep))
                 throw new Exception ("[ERRO]: Hotel não cadastrado");
@@ -82,8 +82,8 @@ public class DAOHoteis
 
                 BDSQLServer.COMANDO.prepareStatement (sql);
 
-                BDSQLServer.COMANDO.setInt (1, numero);
-                BDSQLServer.COMANDO.setInt (2, cep);
+                BDSQLServer.COMANDO.setString (1, numero);
+                BDSQLServer.COMANDO.setString (2, cep);
 
                 BDSQLServer.COMANDO.executeUpdate ();
                 BDSQLServer.COMANDO.commit        ();
@@ -100,7 +100,7 @@ public class DAOHoteis
         if (hotel==null)
             throw new Exception ("[ERRO]: Hotel não fornecido");
 
-        if (!cadastrado (hotel.getNumero(), hotel.getCEP()))
+        if (!cadastrado (((Integer) hotel.getNumero()).toString(), ((Integer) hotel.getCEP()).toString()))
             throw new Exception ("[ERRO]: Hotel não cadastrado");
 
         try
@@ -119,8 +119,8 @@ public class DAOHoteis
             BDSQLServer.COMANDO.setString (1, hotel.getNomeHotel().trim());
             BDSQLServer.COMANDO.setString (2, hotel.getTelefone().trim());
             BDSQLServer.COMANDO.setString (3, hotel.getComplemento());
-            BDSQLServer.COMANDO.setInt    (4, hotel.getNumero());
-            BDSQLServer.COMANDO.setInt    (2, hotel.getCEP());
+            BDSQLServer.COMANDO.setString (4, ((Integer) hotel.getNumero()).toString());
+            BDSQLServer.COMANDO.setString (2, ((Integer) hotel.getCEP()).toString());
 
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
@@ -133,7 +133,7 @@ public class DAOHoteis
     }
 
     //pegar um hotem especifico
-    public static DBOHotel getHotel(int idNumero, int idCep) throws Exception
+    public static DBOHotel getHotel(String idNumero, String idCep) throws Exception
     {
         DBOHotel hotel = null;
 
@@ -148,19 +148,19 @@ public class DAOHoteis
 
             BDSQLServer.COMANDO.prepareStatement (sql);
 
-            BDSQLServer.COMANDO.setInt (1, idNumero);
-            BDSQLServer.COMANDO.setInt(2, idCep);
+            BDSQLServer.COMANDO.setString (1, idNumero);
+            BDSQLServer.COMANDO.setString (2, idCep);
 
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery ();
 
             if (!resultado.first())
-                throw new Exception ("[ERRO]: Candidato não cadastrado");
+                throw new Exception ("[ERRO]: Hotel não cadastrado");
 
             hotel = new DBOHotel(
                                  resultado.getString ("nome"),
-                                 resultado.getInt("numero"),
+                                 Integer.parseInt(resultado.getString("numero")),
                                  resultado.getString ("telefone"),
-                                 resultado.getInt("cep"),
+                                 Integer.parseInt(resultado.getString("cep")),
                                  resultado.getString("complemento")
                                 );
         }
@@ -182,7 +182,7 @@ public class DAOHoteis
         {
             String sql;
 
-            sql = "SELECT E.nome as 'Nome Hotel', e.cep as 'cep', e.nomero as 'número', e.complemento as 'Complemento' " +
+            sql = "SELECT E.nome as 'Nome Hotel', e.cep as 'cep', e.numero as 'número', e.complemento as 'Complemento', e.telefone as 'Telefone' " +
                     "FROM Hoteis.Hotel E ";
 
             BDSQLServer.COMANDO.prepareStatement (sql);

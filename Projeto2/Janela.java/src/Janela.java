@@ -1,6 +1,8 @@
 import bd.core.MeuResultSet;
 import bd.daos.DAOHoteis;
 import bd.dbos.DBOHotel;
+import json.ClienteWS;
+import json.Logradouro;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -298,7 +300,7 @@ public class Janela extends JFrame
         {
             JOptionPane.showMessageDialog (null,
                     err.getMessage(),
-                    "Erro ao exibir candidatos",
+                    "Erro ao exibir Hoteis",
                     JOptionPane.WARNING_MESSAGE);
         }
 
@@ -338,13 +340,14 @@ public class Janela extends JFrame
                         }
 
                         txtHotel.setText(Hoteis.getString("Nome Hotel"));
-                        txtNum.setText(Integer.toString(Hoteis.getInt("numero")));
+                        txtNum.setText(Hoteis.getString("número"));
                         txtCep.setText(Hoteis.getString("cep"));
-                        txtComplemento.setText(Hoteis.getString("complemento"));
-                        txtCidade.setText(Hoteis.getString("cidade")); //Informaçao do json
-                        txtEstado.setText(Hoteis.getString("estado")); //Informaçao do json
-                        txtRua.setText(Hoteis.getString("rua"));
-                        txtTelefone.setText(Hoteis.getString("numero"));  //Informação json
+                        txtComplemento.setText(Hoteis.getString("Complemento"));
+                        txtTelefone.setText(Hoteis.getString("Telefone"));
+                        Logradouro hotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
+                        txtCidade.setText(hotel.getCidade()); //Informaçao do json
+                        txtEstado.setText(hotel.getEstado()); //Informaçao do json
+                        txtRua.setText(hotel.getLogradouro()); //json
                     } catch (Exception err)
                     {}
                     btnAtualizar.setEnabled(true);
@@ -358,7 +361,9 @@ public class Janela extends JFrame
                     txtComplemento.setEditable(false);
                     txtNum.setEditable(false);
                     txtCidade.setEditable(false);
-                    lbComplemento.setText("Complemento");
+                    txtTelefone.setEditable(false);
+                    txtEstado.setEditable(false);
+                    txtCep.setEditable(false);
                     lbMensagem.setText("Mensagem: navegando");
                 break;
             }
@@ -372,11 +377,13 @@ public class Janela extends JFrame
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
                 txtHotel.setEditable(true);
-                txtRua.setEditable(true);
+                txtRua.setEditable(false);
                 txtComplemento.setEditable(true);
+                txtCep.setEditable(true);
                 txtNum.setEditable(true);
                 txtCidade.setEditable(false);
-                lbComplemento.setText("Nº Hotel:");
+                txtEstado.setEditable(false);
+                txtTelefone.setEditable(true);
                 lbMensagem.setText("Mensagem: Insira os dados do novo hotel");
                 break;
             }
@@ -390,10 +397,12 @@ public class Janela extends JFrame
                 btnProximo.setEnabled(false);
                 txtRua.setEditable(false);
                 txtHotel.setEditable(true);
-                txtComplemento.setEditable(true);
-                txtNum.setEditable(true);
+                txtComplemento.setEditable(false);
+                txtNum.setEditable(false);
                 txtCidade.setEditable(false);
-                lbComplemento.setText("N° Hotel:");
+                txtTelefone.setEditable(true);
+                txtCep.setEditable(false);
+                txtEstado.setEditable(false);
                 lbMensagem.setText("Mensagem: Insira os novos dados do hotel");
                 break;
             }
@@ -405,19 +414,24 @@ public class Janela extends JFrame
                 btnDeletar.setEnabled(false);
                 btnAnterior.setEnabled(false);
                 btnProximo.setEnabled(false);
-                txtRua.setEditable(true);
+                txtCep.setEditable(true);
                 txtHotel.setEditable(false);
                 txtComplemento.setEditable(false);
-                txtNum.setEditable(false);
+                txtNum.setEditable(true);
                 txtCidade.setEditable(false);
-                txtRua.setText("");
-                txtRua.grabFocus();
-                lbMensagem.setText("Mensagem: Insira o número do hotel que deseja consultar");
+                txtEstado.setEditable(false);
+                txtRua.setEditable(false);
+                txtTelefone.setEditable(false);
+                txtCep.setText("");
+                txtNum.setText("");
+                txtCep.grabFocus();
+                lbMensagem.setText("Mensagem: Insira o número do hotel e o cep que deseja consultar");
                 break;
             }
             case exibindo:
             {
-                txtRua.setEditable(false);
+                txtCep.setEditable(false);
+                txtNum.setEditable(false);
                 btnConsultar.setEnabled(true);
                 lbMensagem.setText("Pressione [Cancelar] para sair");
                 break;
@@ -465,17 +479,18 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null, 
+            if(JOptionPane.showConfirmDialog(null,
                     "Deseja excluir o registro atual permanentemente?",
                     "Exclusão de registro",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
                 try {
-                    DAOHoteis.excluir(Integer.valueOf(txtNum.getText()), Integer.valueOf(txtCep.getText()));
+                    DAOHoteis.excluir(txtNum.getText(), txtCep.getText());
                     Hoteis = DAOHoteis.getHoteis();
                     Hoteis.first();
                     situacaoAtual = SituacaoAtual.navegando;
                     atualizarTela();
+
                 }
                 catch (Exception err)
                 {
@@ -495,25 +510,27 @@ public class Janela extends JFrame
         {
             switch (situacaoAtual) {
                 case criando: {
-                    if (txtHotel.getText().equals("") || txtComplemento.getText().equals("") || txtNum.getText().equals("") || txtRua.getText().equals(""))
-                        lbMensagem.setText("Mensagem: Preencha todos os dados de candidato!");
+                    if (txtHotel.getText().equals("") || txtCep.getText().equals("") || txtCep.getText().length() < 8 || txtNum.getText().equals(""))
+                        lbMensagem.setText("Mensagem: Preencha todos os dados necessários do hotel corretamente!");
                     else {
-                        try {
-                            DBOHotel cargo = DAOHoteis.getCargo(Integer.valueOf(txtComplemento.getText()));
+                        Logradouro hotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
 
                         if(JOptionPane.showConfirmDialog(null,
-                                "Deseja incluir o candidato:\n" + "Nome: " + txtHotel.getText() + "\n" +
-                                                                        "Número: " + txtRua.getText() + "\n" +
-                                                                        "Partido: " +  txtNum.getText() + "\n" +
-                                                                        "Cargo: " + txtComplemento.getText() + " - " + cargo.getNomeCargo() +  "\n" +
-                                                                        "UF: " + cargo.getUF(),
+                                "Deseja incluir o hotel:\n" + "Nome: " + txtHotel.getText() + "\n" +
+                                                                        "Número: " + txtNum.getText() + "\n" +
+                                                                        "Cep: " +  txtCep.getText() + "\n" +
+                                                                        "Complemento: " + txtComplemento.getText() + "\n" +
+                                                                        "Rua: " + hotel.getLogradouro() + "\n" +
+                                                                        "Cidade: " + hotel.getCidade() + "\n" +
+                                                                        "Estado: " + hotel.getEstado() + "\n" +
+                                                                        "Telefone: " + txtTelefone.getText(),
                                 "Inclusão de registro",
                                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
                         {
-                            DBOHotel novoCandidato = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtRua.getText()), txtNum.getText(), Integer.parseInt(txtComplemento.getText()));
+                            DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
                             try {
-                                DAOHoteis.incluir(novoCandidato);
-                                Hoteis = DAOHoteis.getCandidatos();
+                                DAOHoteis.incluir(novoHotel);
+                                Hoteis = DAOHoteis.getHoteis();
                                 Hoteis.first();
                             } catch (Exception err) {
                                 JOptionPane.showMessageDialog(null,
@@ -524,69 +541,61 @@ public class Janela extends JFrame
                             situacaoAtual = SituacaoAtual.navegando;
                             atualizarTela();
                         }
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null,
-                                    "Cargo fornecido não existe",
-                                    "Cargo inexistente!",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
                     }
                     break;
                 }
                 case alterando: {
-                    if (txtHotel.getText().equals("") || txtComplemento.getText().equals("") || txtNum.getText().equals("") || txtRua.getText().equals("") || txtCidade.getText().equals(""))
-                        lbMensagem.setText("Mensagem: Novo candidato inválido");
+                    if (txtCep.getText().equals("") || txtNum.getText().equals(""))
+                        lbMensagem.setText("Mensagem: Novo Hotel inválido");
                     else
                     {
-                        DBOCargo cargo = null;
-                        try {
-                            cargo = DAOCargos.getCargo(Integer.valueOf(txtComplemento.getText()));
+                        Logradouro hotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
 
                         if(JOptionPane.showConfirmDialog(null,
-                                "Deseja incluir o candidato:\n" + "Nome: " + txtHotel.getText() + "\n" +
-                                        "Número: " + txtRua.getText() + "\n" +
-                                        "Partido: " +  txtNum.getText() + "\n" +
-                                        "Cargo: " + txtComplemento.getText() + " - " + cargo.getNomeCargo() +  "\n" +
-                                        "UF: " + cargo.getUF(),
+                                "Deseja incluir o hotel:\n" + "Nome: " + txtHotel.getText() + "\n" +
+                                        "Número: " + txtNum.getText() + "\n" +
+                                        "Cep: " +  txtCep.getText() + "\n" +
+                                        "Complemento: " + txtComplemento.getText() + "\n" +
+                                        "Rua: " + hotel.getLogradouro() + "\n" +
+                                        "Cidade: " + hotel.getCidade() + "\n" +
+                                        "Estado: " + hotel.getEstado() + "\n" +
+                                        "Telefone: " + txtTelefone.getText(),
                                 "Atualização de registro",
                                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                            DBOHotel novoCandidato = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtRua.getText()), txtNum.getText(), Integer.parseInt(txtComplemento.getText()));
+                            DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
                             try {
-                                DAOHoteis.atualizar(novoCandidato);
-                                Hoteis = DAOHoteis.getCandidatos();
+                                DAOHoteis.atualizar(novoHotel);
+                                Hoteis = DAOHoteis.getHoteis();
                                 Hoteis.first();
                             } catch (Exception err) {
                                 JOptionPane.showMessageDialog(null,
                                         err.getMessage(),
-                                        "Erro ao atualizar candidato!",
+                                        "Erro ao atualizar hotel!",
                                         JOptionPane.ERROR_MESSAGE);
                             }
                             situacaoAtual = SituacaoAtual.navegando;
                             atualizarTela();
                         }
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null,
-                                    ex.getMessage(),
-                                    "Cargo inexistente!",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
                     }
                     break;
                 }
                 case consultando: {
-                    if (txtRua.getText() == "")
-                        lbMensagem.setText("Mensagem: Digite o número do candidato que deseja consultar!");
+                    if (txtNum.getText().equals("") || txtCep.getText().equals(""))
+                        lbMensagem.setText("Mensagem: Digite o número e o cep do hotel que deseja consultar!");
                     else
                     {
                         try {
-                            DBOHotel candidato = DAOHoteis.getHotel(Integer.valueOf(txtRua.getText()));
+                            DBOHotel hotel = DAOHoteis.getHotel(txtNum.getText(), txtCep.getText());
+                            Logradouro logradouroHotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
 
-                            txtHotel.setText(candidato.getNomeHotel());
-                            txtRua.setText(Integer.toString(candidato.getNumero()));
-                            txtNum.setText(candidato.getTelefone());
-                            DBOCargo cargo = DAOCargos.getCargo(candidato.getCEP());
-                            txtComplemento.setText(cargo.getNomeCargo());
-                            txtCidade.setText(cargo.getUF());
+                            txtHotel.setText(hotel.getNomeHotel());
+                            txtNum.setText(Integer.toString(hotel.getNumero()));
+                            txtCep.setText(Integer.toString(hotel.getCEP()));
+                            txtComplemento.setText(hotel.getComplemento());
+                            txtTelefone.setText(hotel.getTelefone());
+                            txtRua.setText(logradouroHotel.getLogradouro());
+                            txtCidade.setText(logradouroHotel.getCidade());
+                            txtEstado.setText(logradouroHotel.getEstado());
 
                             situacaoAtual = SituacaoAtual.exibindo;
                             atualizarTela();
