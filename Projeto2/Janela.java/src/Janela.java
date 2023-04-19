@@ -33,6 +33,8 @@ public class Janela extends JFrame
     protected JLabel lbCidade = new JLabel("Cidade:");
     protected JLabel lbEstado = new JLabel("Estado:");
     protected JLabel lbTelefone = new JLabel("Telefone:");
+    protected JLabel lbBairro = new JLabel("Bairro:");
+
 
     protected JTextField txtHotel = new JTextField();
     protected JTextField txtCep = new JTextField();
@@ -42,6 +44,7 @@ public class Janela extends JFrame
     protected JTextField txtCidade = new JTextField();
     protected JTextField txtEstado = new JTextField();
     protected JTextField txtTelefone = new JTextField();
+    protected JTextField txtBairro = new JTextField();
 /*
     String[] cargos = {"1 - Presidente", "2 - Governador", "3 - Senador", "4 - Deputado Federal", "5 - Deputado Estadual"};
 
@@ -176,6 +179,7 @@ public class Janela extends JFrame
         txtTelefone.addKeyListener(new MaxLength());
         txtCep.addKeyListener(new MaxLength());
 
+
         JPanel pnlBotoes = new JPanel();
         FlowLayout flwBotoes = new FlowLayout();
         pnlBotoes.setLayout(flwBotoes);
@@ -224,23 +228,26 @@ public class Janela extends JFrame
                 grpComponentes.createSequentialGroup()
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(lbHotel)
+                                .addComponent(lbTelefone)
                                 .addComponent(lbNum)
+                                .addComponent(lbComplemento)
                                 .addComponent(lbCEP)
                                 .addComponent(lbRua)
-                                .addComponent(lbComplemento)
+                                .addComponent(lbBairro)
                                 .addComponent(lbCidade)
                                 .addComponent(lbEstado)
-                                .addComponent(lbTelefone)
                                 .addComponent(pnlBotoesCentralizados))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(txtHotel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtHotel, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTelefone)
                                 .addComponent(txtNum)
+                                .addComponent(txtComplemento)
                                 .addComponent(txtCep)
                                 .addComponent(txtRua)
-                                .addComponent(txtComplemento)
+                                .addComponent(txtBairro)
                                 .addComponent(txtCidade)
                                 .addComponent(txtEstado)
-                                .addComponent(txtTelefone))
+                                )
                         .addComponent(pnlBotoesCentralizados)
         );
         grpComponentes.setVerticalGroup(
@@ -249,8 +256,14 @@ public class Janela extends JFrame
                                 .addComponent(lbHotel)
                                 .addComponent(txtHotel))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbTelefone)
+                                .addComponent(txtTelefone))
+                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbNum)
                                 .addComponent(txtNum))
+                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbComplemento)
+                                .addComponent(txtComplemento))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbCEP)
                                 .addComponent(txtCep))
@@ -258,17 +271,14 @@ public class Janela extends JFrame
                                 .addComponent(lbRua)
                                 .addComponent(txtRua))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbComplemento)
-                                .addComponent(txtComplemento))
+                                .addComponent(lbBairro)
+                                .addComponent(txtBairro))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbCidade)
                                 .addComponent(txtCidade))
                         .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbEstado)
                                 .addComponent(txtEstado))
-                        .addGroup(grpComponentes.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbTelefone)
-                                .addComponent(txtTelefone))
                         .addComponent(pnlBotoesCentralizados)
         );
 /*
@@ -307,7 +317,7 @@ public class Janela extends JFrame
         situacaoAtual = SituacaoAtual.navegando;
         atualizarTela();
 
-        this.setSize(700, 350);
+        this.setSize(700, 400);
         this.setVisible(true);
     }
 
@@ -321,6 +331,7 @@ public class Janela extends JFrame
         txtEstado.setText("");
         txtTelefone.setText("");
         txtCep.setText("");
+        txtBairro.setText("");
     }
 
     protected void atualizarTela()
@@ -348,6 +359,7 @@ public class Janela extends JFrame
                         txtCidade.setText(hotel.getCidade()); //Informaçao do json
                         txtEstado.setText(hotel.getEstado()); //Informaçao do json
                         txtRua.setText(hotel.getLogradouro()); //json
+                        txtBairro.setText(hotel.getBairro()); //json
                     } catch (Exception err)
                     {}
                     btnAtualizar.setEnabled(true);
@@ -364,6 +376,7 @@ public class Janela extends JFrame
                     txtTelefone.setEditable(false);
                     txtEstado.setEditable(false);
                     txtCep.setEditable(false);
+                    txtBairro.setEditable(false);
                     lbMensagem.setText("Mensagem: navegando");
                 break;
             }
@@ -384,6 +397,7 @@ public class Janela extends JFrame
                 txtCidade.setEditable(false);
                 txtEstado.setEditable(false);
                 txtTelefone.setEditable(true);
+                txtBairro.setEditable(false);
                 lbMensagem.setText("Mensagem: Insira os dados do novo hotel");
                 break;
             }
@@ -397,12 +411,13 @@ public class Janela extends JFrame
                 btnProximo.setEnabled(false);
                 txtRua.setEditable(false);
                 txtHotel.setEditable(true);
-                txtComplemento.setEditable(false);
+                txtComplemento.setEditable(true);
                 txtNum.setEditable(false);
                 txtCidade.setEditable(false);
                 txtTelefone.setEditable(true);
                 txtCep.setEditable(false);
                 txtEstado.setEditable(false);
+                txtBairro.setEditable(false);
                 lbMensagem.setText("Mensagem: Insira os novos dados do hotel");
                 break;
             }
@@ -422,8 +437,8 @@ public class Janela extends JFrame
                 txtEstado.setEditable(false);
                 txtRua.setEditable(false);
                 txtTelefone.setEditable(false);
-                txtCep.setText("");
-                txtNum.setText("");
+                txtBairro.setEditable(false);
+                limparTela();
                 txtCep.grabFocus();
                 lbMensagem.setText("Mensagem: Insira o número do hotel e o cep que deseja consultar");
                 break;
@@ -510,78 +525,112 @@ public class Janela extends JFrame
         {
             switch (situacaoAtual) {
                 case criando: {
-                    if (txtHotel.getText().equals("") || txtCep.getText().equals("") || txtCep.getText().length() < 8 || txtNum.getText().equals(""))
+                    if (txtHotel.getText().equals("") || txtCep.getText().equals("") || txtCep.getText().length() < 8 || txtNum.getText().equals("")) {
                         lbMensagem.setText("Mensagem: Preencha todos os dados necessários do hotel corretamente!");
+                        JOptionPane.showMessageDialog(null,
+                                "Preencha todos os dados necessários do hotel corretamente!",
+                                "Dados incorretos",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     else {
-                        Logradouro hotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
+                        try {
+                            Logradouro hotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
 
-                        if(JOptionPane.showConfirmDialog(null,
-                                "Deseja incluir o hotel:\n" + "Nome: " + txtHotel.getText() + "\n" +
-                                                                        "Número: " + txtNum.getText() + "\n" +
-                                                                        "Cep: " +  txtCep.getText() + "\n" +
-                                                                        "Complemento: " + txtComplemento.getText() + "\n" +
-                                                                        "Rua: " + hotel.getLogradouro() + "\n" +
-                                                                        "Cidade: " + hotel.getCidade() + "\n" +
-                                                                        "Estado: " + hotel.getEstado() + "\n" +
-                                                                        "Telefone: " + txtTelefone.getText(),
-                                "Inclusão de registro",
-                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-                        {
-                            DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
-                            try {
-                                DAOHoteis.incluir(novoHotel);
-                                Hoteis = DAOHoteis.getHoteis();
-                                Hoteis.first();
-                            } catch (Exception err) {
-                                JOptionPane.showMessageDialog(null,
-                                        err.getMessage(),
-                                        "Erro de inclusão",
-                                        JOptionPane.ERROR_MESSAGE);
+                            if (JOptionPane.showConfirmDialog(null,
+                                    "Deseja incluir o hotel:\n" + "Nome: " + txtHotel.getText() + "\n" +
+                                            "Telefone: " + txtTelefone.getText() + "\n" +
+                                            "Número: " + txtNum.getText() + "\n" +
+                                            "Complemento: " + txtComplemento.getText() + "\n" +
+                                            "Cep: " + txtCep.getText() + "\n" +
+                                            "Rua: " + hotel.getLogradouro() + "\n" +
+                                            "Bairro: " + hotel.getBairro() + "\n" +
+                                            "Cidade: " + hotel.getCidade() + "\n" +
+                                            "Estado: " + hotel.getEstado() + "\n",
+                                    "Inclusão de registro",
+                                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                try {
+                                    DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
+                                    try {
+                                        DAOHoteis.incluir(novoHotel);
+                                        Hoteis = DAOHoteis.getHoteis();
+                                        Hoteis.first();
+                                    } catch (Exception err) {
+                                        JOptionPane.showMessageDialog(null,
+                                                err.getMessage(),
+                                                "Erro de inclusão",
+                                                JOptionPane.ERROR_MESSAGE);
+                                    }
+                                    situacaoAtual = SituacaoAtual.navegando;
+                                    atualizarTela();
+                                } catch (Exception errodeTraducao)
+                                {
+                                    JOptionPane.showMessageDialog(null,
+                                            "No campo de número e de CEP só é permitido a entrada de números!",
+                                            "Erro ao inserir hotel!",
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
                             }
-                            situacaoAtual = SituacaoAtual.navegando;
-                            atualizarTela();
+                        }
+                        catch (Exception erro)
+                        {
+                            JOptionPane.showMessageDialog(null,
+                                    "Não foi possível localizar o CEP informado",
+                                    "Erro ao inserir hotel!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     break;
                 }
                 case alterando: {
-                    if (txtCep.getText().equals("") || txtNum.getText().equals(""))
+                    if (txtCep.getText().equals("") || txtNum.getText().equals("")) {
                         lbMensagem.setText("Mensagem: Novo Hotel inválido");
-                    else
-                    {
+                        JOptionPane.showMessageDialog(null,
+                                "Digite o CEP e o número do hotel corretamente!",
+                                "Novo Hotel inválido",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+
                         Logradouro hotel = (Logradouro) ClienteWS.getObjeto(Logradouro.class, "https://api.postmon.com.br/v1/cep", txtCep.getText());
 
-                        if(JOptionPane.showConfirmDialog(null,
+                        if (JOptionPane.showConfirmDialog(null,
                                 "Deseja incluir o hotel:\n" + "Nome: " + txtHotel.getText() + "\n" +
+                                        "Telefone: " + txtTelefone.getText() + "\n" +
                                         "Número: " + txtNum.getText() + "\n" +
-                                        "Cep: " +  txtCep.getText() + "\n" +
                                         "Complemento: " + txtComplemento.getText() + "\n" +
+                                        "Cep: " + txtCep.getText() + "\n" +
                                         "Rua: " + hotel.getLogradouro() + "\n" +
+                                        "Bairro: " + hotel.getBairro() + "\n" +
                                         "Cidade: " + hotel.getCidade() + "\n" +
-                                        "Estado: " + hotel.getEstado() + "\n" +
-                                        "Telefone: " + txtTelefone.getText(),
+                                        "Estado: " + hotel.getEstado() + "\n",
                                 "Atualização de registro",
                                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                            DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
-                            try {
-                                DAOHoteis.atualizar(novoHotel);
-                                Hoteis = DAOHoteis.getHoteis();
-                                Hoteis.first();
-                            } catch (Exception err) {
-                                JOptionPane.showMessageDialog(null,
-                                        err.getMessage(),
-                                        "Erro ao atualizar hotel!",
-                                        JOptionPane.ERROR_MESSAGE);
-                            }
-                            situacaoAtual = SituacaoAtual.navegando;
-                            atualizarTela();
+                                DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
+                                try {
+                                    DAOHoteis.atualizar(novoHotel);
+                                    Hoteis = DAOHoteis.getHoteis();
+                                    Hoteis.first();
+                                } catch (Exception err) {
+                                    JOptionPane.showMessageDialog(null,
+                                            err.getMessage(),
+                                            "Erro ao atualizar hotel!",
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
+                                situacaoAtual = SituacaoAtual.navegando;
+                                atualizarTela();
                         }
                     }
+                    }
                     break;
-                }
+
                 case consultando: {
-                    if (txtNum.getText().equals("") || txtCep.getText().equals(""))
+                    if (txtNum.getText().equals("") || txtCep.getText().equals("")) {
                         lbMensagem.setText("Mensagem: Digite o número e o cep do hotel que deseja consultar!");
+                        JOptionPane.showMessageDialog(null,
+                                "Digite o CEP e o número do hotel que deseja consultar!!",
+                                "Dados Inexistentes",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     else
                     {
                         try {
@@ -596,6 +645,7 @@ public class Janela extends JFrame
                             txtRua.setText(logradouroHotel.getLogradouro());
                             txtCidade.setText(logradouroHotel.getCidade());
                             txtEstado.setText(logradouroHotel.getEstado());
+                            txtBairro.setText(logradouroHotel.getBairro());
 
                             situacaoAtual = SituacaoAtual.exibindo;
                             atualizarTela();
@@ -653,25 +703,30 @@ public class Janela extends JFrame
     protected class MaxLength implements KeyListener
     {
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyReleased(KeyEvent e) {
             if (txtHotel.getText().length() >= 50)
-                txtHotel.setText(txtHotel.getText().substring(0,49));
+                txtHotel.setText(txtHotel.getText().substring(0,50));
 
-            if (txtComplemento.getText().length() >= 10)
-                txtComplemento.setText(txtComplemento.getText().substring(0,9));
+            if (txtComplemento.getText().length() >= 20)
+                txtComplemento.setText(txtComplemento.getText().substring(0,20));
 
             if (txtNum.getText().length() >= 5)
-                txtNum.setText(txtNum.getText().substring(0,4));
+                txtNum.setText(txtNum.getText().substring(0,5));
 
-            if(txtCep.getText().length() >= 8)
-                txtCep.setText(txtCep.getText().substring(0, 7));
+            if (txtCep.getText().length() >= 8)
+                txtCep.setText(txtCep.getText().substring(0, 8));
 
-            if(txtTelefone.getText().length() >= 20)
-                txtTelefone.setText(txtTelefone.getText().substring(0,19));
+            if (txtTelefone.getText().length() >= 15)
+                txtTelefone.setText(txtTelefone.getText().substring(0,15));
+
+            txtCep.setText(txtCep.getText().replaceAll("[^0-9]", ""));
+            txtNum.setText(txtNum.getText().replaceAll("[^0-9]", ""));
+            txtTelefone.setText(txtTelefone.getText().replaceAll("[^0-9]", ""));
         }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyPressed(KeyEvent e)
+        {}
 
         @Override
         public void keyTyped(KeyEvent e) {}

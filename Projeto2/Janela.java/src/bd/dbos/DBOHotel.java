@@ -31,42 +31,52 @@ public class DBOHotel implements Cloneable{
         {
             throw new Exception ("[ERRO]: Nome do Hotel não fornecido");
         }
-            this.nomeHotel = nomeHotel;
+        if(nomeHotel.length() > 50)
+            nomeHotel = nomeHotel.substring(0, 50);
+
+        this.nomeHotel = nomeHotel;
     }
 
     public void setNumero(int numero) throws Exception
     {
-        if(numero <= 0 )
+        if(numero <= 0 || numero > 99999)
         {
             throw new Exception ("[ERRO]: Número do Hotel inválido");
         }
+
         this.numero = numero;
     }
 
     public void setTelefone(String telefone) throws  Exception
     {
-        if(telefone.equals("") || telefone == null )
+        if(telefone == null )
         {
             throw new Exception ("[ERRO]: Telefone não fornecido");
         }
+        if(telefone.length() > 15)
+            telefone = telefone.substring(0, 15);
+
         this.telefone = telefone;
     }
 
     public void setCEP(int cep) throws Exception
     {
-        if(cep <= 0 )
+        if(cep <= 0 || cep > 99999999)
         {
             throw new Exception ("[ERRO]: CEP inválido");
         }
+
         this.cep = cep;
     }
 
     public void setComplemento(String complemento) throws Exception
     {
-        if(complemento.equals("") || complemento == null )
-        {
-            throw new Exception ("[ERRO]: Complemento não fornecido");
+        if(complemento == null ) {
+            throw new Exception("[ERRO]: Complemento não fornecido");
         }
+        if(complemento.length() > 20)
+            complemento = complemento.substring(0, 20);
+
         this.complemento = complemento;
     }
 

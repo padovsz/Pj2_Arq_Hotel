@@ -63,7 +63,7 @@ public class DAOHoteis
         catch (SQLException erro)
         {
             BDSQLServer.COMANDO.rollback();
-            throw new Exception("[ERRO]: Problemas ao acessar o Banco de Dados para inserir hoteis!");
+            throw new Exception("[ERRO]: Endereço de hotel já está sendo utilizado!");
         }
     }
 
@@ -108,7 +108,7 @@ public class DAOHoteis
             String sql;
 
             sql = "UPDATE Hoteis.Hotel " +
-                    "SET nome =?, " +
+                    "SET nome=?, " +
                     "telefone=?, " +
                     "complemento=? " +
                     "WHERE numero= ? " +
@@ -120,7 +120,7 @@ public class DAOHoteis
             BDSQLServer.COMANDO.setString (2, hotel.getTelefone().trim());
             BDSQLServer.COMANDO.setString (3, hotel.getComplemento());
             BDSQLServer.COMANDO.setString (4, ((Integer) hotel.getNumero()).toString());
-            BDSQLServer.COMANDO.setString (2, ((Integer) hotel.getCEP()).toString());
+            BDSQLServer.COMANDO.setString (5, ((Integer) hotel.getCEP()).toString());
 
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
