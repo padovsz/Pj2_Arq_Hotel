@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mysql5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/formulario/Projeto2/Janela.java/src/bd/mysql5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,8 +1,7 @@
 <component name="libraryTable">
   <library name="sqljdbc4">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Projeto2/Janela.java/src/sqljdbc4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../2023-03-29.P/jackson-all-1.9.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/formulario/out/production/Pj2_Maligno/sqljdbc4.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
