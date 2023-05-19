@@ -4,9 +4,10 @@ async function getConexao()
         return global.conexao;
 
     const mysql    = require('mysql2/promise');
-    const bdConfig = require('./bdconfig.js');
+    const DATABASE_URL = 'mysql://4ycnpk4n6zq3hwjo11vd:pscale_pw_INuHTPrx7MWOCPKnfjKmvMujMNS0FFXIqoJ6N7ElNyU@aws.connect.psdb.cloud/aosmali?ssl={"rejectUnauthorized":true}'
 
-    const conexao = await mysql.createConnection (bdConfig);
+
+    const conexao = await mysql.createConnection (DATABASE_URL);
     global.conexao = conexao;
     return conexao;
 }
@@ -15,7 +16,7 @@ async function estrutureSe()
 {
     const conexao = await getConexao();
 
-    const sql = 'CREATE TABLE IF NOT EXISTS hoteis (id TINYINT PRIMARY KEY IDENTITY, ' +
+    const sql = 'CREATE TABLE IF NOT EXISTS hoteis (id TINYINT PRIMARY KEY AUTO_INCREMENT, ' +
                                                     'nome VARCHAR(50), ' + 
                                                     'CEP VARCHAR(8) NOT NULL, ' +
                                                     'numero VARCHAR(5) not null, ' + 
