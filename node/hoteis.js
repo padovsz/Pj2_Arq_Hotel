@@ -3,8 +3,8 @@ const bd = require ('./bd');
 async function inclua (hotel)
 {
     const conexao = await bd.getConexao ();
-    const sql     = 'INSERT INTO hoteis (id,nomeHotel,cep,numero,complemento,telefone) VALUES (?,?,?,?,?,?)';
-    const dados   = [hotel.id,hotel.nomeHotel,hotel.cep,hotel.numero,hotel.complemento,hotel.telefone];
+    const sql     = 'INSERT INTO hoteis (nome,cep,numero,complemento,telefone) VALUES (?,?,?,?,?)';
+    const dados   = [hotel.nomeHotel,hotel.cep,hotel.numero,hotel.complemento,hotel.telefone];
 
     return await conexao.query (sql, dados);
 }
@@ -13,7 +13,7 @@ async function atualize (hotel)
 {
     const conexao = await bd.getConexao ();
     
-    const sql   = 'UPDATE hoteis SET nomeHotel=?, telefone=?, complemento=? WHERE numero= ? AND cep=?"';
+    const sql   = 'UPDATE hoteis SET nome=?, telefone=?, complemento=? WHERE numero= ? AND cep=?';
     const dados = [hotel.nomeHotel,hotel.telefone,hotel.complemento,hotel.numero,hotel.cep];
 
     return await conexao.query (sql,dados);

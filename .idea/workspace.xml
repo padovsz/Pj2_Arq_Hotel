@@ -5,123 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af45b442-d528-494d-96b7-50fc1a24eefa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jackson_all_1_9_01.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pj2_Arq_Hotel.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/Pj2_Maligno.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/Projeto2/.idea/Projeto2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/Projeto2/Janela.java/Janela.java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/Projeto2/Janela.java/src/Janela.java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/Projeto2/Janela.java/src/out/production/Janela.java/Janela.java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/Projeto2/Projeto2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/out/production/Pj2_Maligno/Janela.java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/formulario/out/production/Pj2_Maligno/out/production/Janela.java/Janela.java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/bdconfig.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/node_modules/npm/node_modules/clone/clone.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/jackson_all_1_9_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_all_1_9_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqljdbc4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sqljdbc4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqljdbc41.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sqljdbc41.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqljdbc42.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pj2_Maligno.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/Projeto2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/libraries/sqljdbc4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/libraries/sqljdbc41.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/Janela.java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/Janela.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/Janela.java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/bd/BDSQLServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/bd/core/MeuPreparedStatement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/bd/core/MeuResultSet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/bd/core/MeuStatement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/bd/daos/DAOHoteis.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/bd/dbos/DBOHotel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/ClienteWS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/InfoCidade.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/InfoEstado.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/Logradouro.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/Para compilar e rodar.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/Programa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/jackson-all-1.9.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/json/url.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela$AtualizarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela$ConsultarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela$CriarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela$DeletarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela$FechamentoDeJanela.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/out/production/Janela.java/Janela.java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/resources/atualizar.BMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/resources/criar.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/resources/excluir.BMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/resources/ler.BMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/resources/salvar.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Janela.java/src/sqljdbc4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projeto2/Projeto2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$AnteriorRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$AtualizarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$CancelarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$ConsultarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$CriarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$DeletarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$FechamentoDeJanela.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$MaxLength.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$ProximoRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$SalvarRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela$SituacaoAtual.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/Janela.java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/bd/BDSQLServer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/bd/core/MeuPreparedStatement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/bd/core/MeuResultSet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/bd/core/MeuStatement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/bd/daos/DAOHoteis.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/bd/dbos/DBOHotel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/ClienteWS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/InfoCidade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/InfoEstado.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/Logradouro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/Para compilar e rodar.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/Programa.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/jackson-all-1.9.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/json/url.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/out/production/Janela.java/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/out/production/Janela.java/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/out/production/Janela.java/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/out/production/Janela.java/Janela.java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/resources/atualizar.BMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/resources/criar.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/resources/excluir.BMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/resources/ler.BMP" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/resources/salvar.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Pj2_Maligno/sqljdbc4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/bd.js" beforeDir="false" afterPath="$PROJECT_DIR$/node/bd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/hoteis.js" beforeDir="false" afterPath="$PROJECT_DIR$/node/hoteis.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,14 +24,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/u22143/Desktop/Pj2_Arq_Hotel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/u22143/Desktop/Pj2_Arq_Hotel&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

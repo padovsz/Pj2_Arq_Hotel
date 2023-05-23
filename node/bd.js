@@ -4,7 +4,8 @@ async function getConexao()
         return global.conexao;
 
     const mysql    = require('mysql2/promise');
-    const DATABASE_URL = 'mysql://4ycnpk4n6zq3hwjo11vd:pscale_pw_INuHTPrx7MWOCPKnfjKmvMujMNS0FFXIqoJ6N7ElNyU@aws.connect.psdb.cloud/aosmali?ssl={"rejectUnauthorized":true}'
+    const DATABASE_URL='mysql://0ivavayfmkrfm2g7ps24:pscale_pw_vAiJl2hel4LRzxBN86Y3uo2Llpiy8c8Pk2uBVeZiUoq@aws.connect.psdb.cloud/aosmali?ssl={"rejectUnauthorized":true}'
+
 
 
     const conexao = await mysql.createConnection (DATABASE_URL);
