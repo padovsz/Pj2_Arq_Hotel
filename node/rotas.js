@@ -6,7 +6,7 @@ const Comunicado = require ('./comunicado.js');
 // para a rota de CREATE
 async function inclusao (req, res)
 {
-    if (Object.values(req.body).length!=6 || !req.body.id || !req.body.nomeHotel || !req.body.cep || !req.body.numero || !req.body.complemento || !req.body.telefone)
+    if (Object.values(req.body).length!=6 || !req.body.id || !req.body.nome || !req.body.cep || !req.body.numero || !req.body.complemento || !req.body.telefone)
     {
         const erro = Comunicado.novo('DdI','Dados inesperados','Não foram fornecidos exatamente as 6 informações esperadas de um hotel (id, nome do Hotel, cep, nujmero, complemento e telefone)').object;
         return res.status(422).json(erro);
@@ -15,7 +15,7 @@ async function inclusao (req, res)
     let hotel;
     try
     {
-        hotel = Hotel.novo (req.body.id,req.body.nomeHotel,req.body.cep,req.body.numero,req.body.complemento,req.body.telefone);
+        hotel = Hotel.novo (req.body.id,req.body.nome,req.body.cep,req.body.numero,req.body.complemento,req.body.telefone);
     }
     catch (excecao)
     {
@@ -47,7 +47,7 @@ async function inclusao (req, res)
 // para a rota de UPDATE
 async function atualizacao (req, res)
 {
-    if (Object.values(req.body).length!=6 || !req.body.id || !req.body.nomeHotel || !req.body.cep || !req.body.numero || !req.body.complemento || !req.body.telefone)
+    if (Object.values(req.body).length!=6 || !req.body.id || !req.body.nome || !req.body.cep || !req.body.numero || !req.body.complemento || !req.body.telefone)
     {
         const erro = Comunicado.novo('DdI','Dados inesperados','Não foram fornecidos exatamente as 6 informações esperadas de um hotel (id, nome do Hotel, cep, nujmero, complemento e telefone)').object;
         return res.status(422).json(erro);
@@ -56,7 +56,7 @@ async function atualizacao (req, res)
     let hotel;
     try
     {
-        hotel = Hotel.novo (req.body.id,req.body.nomeHotel,req.body.cep,req.body.numero,req.body.complemento,req.body.telefone);
+        hotel = Hotel.novo (req.body.id,req.body.nome,req.body.cep,req.body.numero,req.body.complemento,req.body.telefone);
     }
     catch (excecao)
     {

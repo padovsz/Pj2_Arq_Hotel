@@ -1,16 +1,16 @@
 class Hotel
 {
     #id
-    #nomeHotel
+    #nome
     #cep
     #numero
     #complemento
     #telefone
 
-    constructor (id,nomeHotel,cep,numero,complemento,telefone)
+    constructor (id,nome,cep,numero,complemento,telefone)
     {
         this.id=id;
-        this.nomeHotel=nomeHotel;
+        this.nome=nome;
         this.cep=cep;
         this.numero=numero;
         this.complemento=complemento;
@@ -22,9 +22,9 @@ class Hotel
         return this.#id
     }
 
-    get nomeHotel ()
+    get nome ()
     {
-        return this.#nomeHotel
+        return this.#nome
     }
 
     get cep ()
@@ -55,12 +55,12 @@ class Hotel
         this.#id = id;
     }
 
-    set nomeHotel (nomeHotel)
+    set nome (nome)
     {
-        if (nomeHotel===undefined || typeof nomeHotel !== 'string' || nomeHotel==="")
+        if (nome===undefined || typeof nome !== 'string' || nome==="")
             throw ('Nome inválido');
 
-        this.#nomeHotel = nomeHotel;
+        this.#nome = nome;
     }
 
     set cep (cep)
@@ -96,9 +96,9 @@ class Hotel
     }
 }
 
-function novo (id,nomeHotel,cep,numero,complemento,telefone)
+function novo (id,nome,cep,numero,complemento,telefone)
 {
-    return new Hotel (id,nomeHotel,cep,numero,complemento,telefone);
+    return new Hotel (id,nome,cep,numero,complemento,telefone);
 }
 
 module.exports = {novo}

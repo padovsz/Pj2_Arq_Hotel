@@ -4,7 +4,7 @@ async function inclua (hotel)
 {
     const conexao = await bd.getConexao ();
     const sql     = 'INSERT INTO hoteis (nome,cep,numero,complemento,telefone) VALUES (?,?,?,?,?)';
-    const dados   = [hotel.nomeHotel,hotel.cep,hotel.numero,hotel.complemento,hotel.telefone];
+    const dados   = [hotel.nome,hotel.cep,hotel.numero,hotel.complemento,hotel.telefone];
 
     return await conexao.query (sql, dados);
 }
@@ -14,7 +14,7 @@ async function atualize (hotel)
     const conexao = await bd.getConexao ();
     
     const sql   = 'UPDATE hoteis SET nome=?, telefone=?, complemento=? WHERE numero= ? AND cep=?';
-    const dados = [hotel.nomeHotel,hotel.telefone,hotel.complemento,hotel.numero,hotel.cep];
+    const dados = [hotel.nome,hotel.telefone,hotel.complemento,hotel.numero,hotel.cep];
 
     return await conexao.query (sql,dados);
 }

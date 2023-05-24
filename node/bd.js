@@ -4,7 +4,8 @@ async function getConexao()
         return global.conexao;
 
     const mysql    = require('mysql2/promise');
-    const DATABASE_URL='mysql://0ivavayfmkrfm2g7ps24:pscale_pw_vAiJl2hel4LRzxBN86Y3uo2Llpiy8c8Pk2uBVeZiUoq@aws.connect.psdb.cloud/aosmali?ssl={"rejectUnauthorized":true}'
+    const DATABASE_URL='mysql://6qg9rezmutbrtnr8xrty:pscale_pw_J2gkT0y6pGl2MJBcN7NJDNW0JE8ze5kcSnXWllP2EkS@aws.connect.psdb.cloud/aosmali?ssl={"rejectUnauthorized":true}'
+
 
 
 
@@ -19,7 +20,7 @@ async function estrutureSe()
 
     const sql = 'CREATE TABLE IF NOT EXISTS hoteis (id TINYINT PRIMARY KEY AUTO_INCREMENT, ' +
                                                     'nome VARCHAR(50), ' + 
-                                                    'CEP VARCHAR(8) NOT NULL, ' +
+                                                    'cep VARCHAR(8) NOT NULL, ' +
                                                     'numero VARCHAR(5) not null, ' + 
                                                     'complemento VARCHAR(10), ' +
                                                     'telefone VARCHAR(20))'
