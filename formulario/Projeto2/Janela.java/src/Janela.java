@@ -2,6 +2,7 @@ import bd.core.MeuResultSet;
 import bd.daos.DAOHoteis;
 import bd.dbos.DBOHotel;
 import json.ClienteWS;
+import json.Hotel;
 import json.Logradouro;
 
 import java.awt.*;
@@ -10,6 +11,8 @@ import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Janela extends JFrame
 {
@@ -91,7 +94,7 @@ public class Janela extends JFrame
                                          ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                                          ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 */
-    MeuResultSet Hoteis;
+    ArrayList<LinkedHashMap> Hoteis;
     public Janela()
     {
         super("Consulta");
@@ -303,8 +306,8 @@ public class Janela extends JFrame
         this.addWindowListener(new FechamentoDeJanela());
 
         try{
-            Hoteis = DAOHoteis.getHoteis();
-            Hoteis.first();
+            Hoteis = (ArrayList<LinkedHashMap>) ClienteWS.getObjeto(ArrayList.class, "https://localhost:3000/hoteis", "13033205");
+            System.out.println (Hoteis);
         }
         catch (Exception err)
         {
@@ -342,7 +345,7 @@ public class Janela extends JFrame
             {
                     btnProximo.setEnabled(true);
                     btnAnterior.setEnabled(true);
-                    try {
+                    /*try {
                         if (Hoteis.isFirst()) {
                             btnAnterior.setEnabled(false);
                         }
@@ -350,7 +353,7 @@ public class Janela extends JFrame
                             btnProximo.setEnabled(false);
                         }
 
-                        txtHotel.setText(Hoteis.getString("Nome Hotel"));
+                        txtHotel.setText(Hoteis.);
                         txtNum.setText(Hoteis.getString("número"));
                         txtCep.setText(Hoteis.getString("cep"));
                         txtComplemento.setText(Hoteis.getString("Complemento"));
@@ -361,7 +364,7 @@ public class Janela extends JFrame
                         txtRua.setText(hotel.getLogradouro()); //json
                         txtBairro.setText(hotel.getBairro()); //json
                     } catch (Exception err)
-                    {}
+                    {}*/
                     btnAtualizar.setEnabled(true);
                     btnConsultar.setEnabled(true);
                     btnDeletar.setEnabled(true);
@@ -501,8 +504,8 @@ public class Janela extends JFrame
             {
                 try {
                     DAOHoteis.excluir(txtNum.getText(), txtCep.getText());
-                    Hoteis = DAOHoteis.getHoteis();
-                    Hoteis.first();
+                    /*Hoteis = DAOHoteis.getHoteis();
+                    Hoteis.first();*/
                     situacaoAtual = SituacaoAtual.navegando;
                     atualizarTela();
 
@@ -552,8 +555,8 @@ public class Janela extends JFrame
                                     DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
                                     try {
                                         DAOHoteis.incluir(novoHotel);
-                                        Hoteis = DAOHoteis.getHoteis();
-                                        Hoteis.first();
+                                        /*Hoteis = DAOHoteis.getHoteis();
+                                        Hoteis.first();*/
                                     } catch (Exception err) {
                                         JOptionPane.showMessageDialog(null,
                                                 err.getMessage(),
@@ -608,8 +611,8 @@ public class Janela extends JFrame
                                 DBOHotel novoHotel = new DBOHotel(txtHotel.getText(), Integer.parseInt(txtNum.getText()), txtTelefone.getText(), Integer.parseInt(txtCep.getText()), txtComplemento.getText());
                                 try {
                                     DAOHoteis.atualizar(novoHotel);
-                                    Hoteis = DAOHoteis.getHoteis();
-                                    Hoteis.first();
+                                    /*Hoteis = DAOHoteis.getHoteis();
+                                    Hoteis.first();*/
                                 } catch (Exception err) {
                                     JOptionPane.showMessageDialog(null,
                                             err.getMessage(),
@@ -678,11 +681,11 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
+            /*try {
                 Hoteis.next();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
-            }
+            }*/
             atualizarTela();
         }
     }
@@ -691,11 +694,11 @@ public class Janela extends JFrame
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                Hoteis.previous();
+            /*try {
+                //Hoteis.previous();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
-            }
+            }*/
             atualizarTela();
         }
     }

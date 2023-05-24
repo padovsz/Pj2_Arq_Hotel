@@ -98,6 +98,90 @@ public class ClienteWS
         return objetoRetorno;
     }
 
+    public static Object putObjeto (Object objetoEnvio,
+                                     Class tipoObjetoRetorno,
+                                     String urlWebService)
+    {
+        Object objetoRetorno = null;
+
+        try
+        {
+            String requestJson = toJson(objetoEnvio);
+
+            URL url = new URL(urlWebService);
+            HttpURLConnection connection =
+                    (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setConnectTimeout(15000);
+            //connection.setRequestProperty("login", "seulogin");
+            //connection.setRequestProperty("senha", "suasenha");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Length", Integer.toString(requestJson.length()));
+
+            DataOutputStream stream =
+                    new DataOutputStream (connection.getOutputStream());
+            stream.write (requestJson.getBytes("UTF-8"));
+            stream.flush ();
+            stream.close ();
+            connection.connect ();
+
+            String responseJson = inputStreamToString (connection.getInputStream());
+            connection.disconnect();
+            objetoRetorno = fromJson (responseJson, tipoObjetoRetorno);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return objetoRetorno;
+    }
+
+    public static Object deleteObjeto (Object objetoEnvio,
+                                     Class tipoObjetoRetorno,
+                                     String urlWebService)
+    {
+        Object objetoRetorno = null;
+
+        try
+        {
+            String requestJson = toJson(objetoEnvio);
+
+            URL url = new URL(urlWebService);
+            HttpURLConnection connection =
+                    (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setConnectTimeout(15000);
+            //connection.setRequestProperty("login", "seulogin");
+            //connection.setRequestProperty("senha", "suasenha");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Length", Integer.toString(requestJson.length()));
+
+            DataOutputStream stream =
+                    new DataOutputStream (connection.getOutputStream());
+            stream.write (requestJson.getBytes("UTF-8"));
+            stream.flush ();
+            stream.close ();
+            connection.connect ();
+
+            String responseJson = inputStreamToString (connection.getInputStream());
+            connection.disconnect();
+            objetoRetorno = fromJson (responseJson, tipoObjetoRetorno);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return objetoRetorno;
+    }
+
 
     public static String inputStreamToString (InputStream is) throws IOException
     {
