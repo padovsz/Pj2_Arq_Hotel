@@ -2,9 +2,9 @@
 Projeto do professor André Luís dos Reis Gomes de Carvalho da matéria de Estrutura de Dados II presente no 4º Semestre do curso de Informática no Colégio Técnico de Campinas.
 
 ## Integrantes
+- 👩‍💻 Clara Andrade (https://github.com/claraandradee)
 - 🧑‍💻 Hugo Gomes Soares (https://github.com/Miojodetomat)
 - 👩‍💻 Maria Eduarda Padovan (https://github.com/padovsz)
-- 👩‍💻 Clara Andrade (https://github.com/claraandradee)
 
 ## Objetivo
 O objetivo deste projeto é desenvolver um sistema que permita a gestão eficiente de informações sobre hotéis. O sistema deverá possibilitar a criação, leitura, atualização e exclusão de dados (CRUD) relacionados a hotéis, facilitando o gerenciamento por parte dos administradores.
